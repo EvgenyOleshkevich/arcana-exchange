@@ -1,0 +1,32 @@
+INSERT INTO cards (
+    name_ru,
+    name_en,
+    image_url,
+    external_image_code,
+    count_wanted,
+    count_owned,
+    count_offered
+)
+VALUES
+    ('Маг', 'The Magician', '/assets/images/cards/magician.png', 'd1f7b0c0a2eebbe16a7ed47ab05c4072', 0, 0, 0),
+    ('Верховная Жрица', 'The High Priestess', '/assets/images/cards/high-priestess.png', '526196b8385db4260c266d0ee1890862', 0, 0, 0),
+    ('Императрица', 'The Empress', '/assets/images/cards/empress.png', '1', 0, 0, 0),
+    ('Император', 'The Emperor', '/assets/images/cards/emperor.png', '47c198ca9bfd579c0ffe6198e18d61dc', 0, 0, 0),
+    ('Иерофант', 'The Hierophant', '/assets/images/cards/hierophant.png', '9395116948cd694a4a4c42cb1f3ed4ed', 0, 0, 0),
+    ('Влюблённые', 'The Lovers', '/assets/images/cards/lovers.png', 'fe243a1f18e93c49cce2e313b46c2c8c', 0, 0, 0),
+    ('Колесница', 'The Chariot', '/assets/images/cards/chariot.png', '2', 0, 0, 0),
+    ('Сила', 'Strength', '/assets/images/cards/strength.png', '7fc982c1d474fdae37f50cbc8a58a03b', 0, 0, 0),
+    ('Отшельник', 'The Hermit', '/assets/images/cards/hermit.png', '52a9f94e583643d7ae9653c468e231ed', 0, 0, 0),
+    ('Колесо Судьбы', 'Wheel of Fortune', '/assets/images/cards/wheel-of-fortune.png', '3', 0, 0, 0),
+    ('Справедливость', 'Justice', '/assets/images/cards/justice.png', '94621a48929aac5220301655c7ccf40e', 0, 0, 0),
+    ('Повешенный', 'The Hanged Man', '/assets/images/cards/hanged-man.png', '4780037cb0ee71a6572078aa9ec35a50', 0, 0, 0),
+    ('Смерть', 'Death', '/assets/images/cards/death.png', '0cdf3891c9f28603d6601378d5f3587c', 0, 0, 0),
+    ('Умеренность', 'Temperance', '/assets/images/cards/temperance.png', '4', 0, 0, 0),
+    ('Дьявол', 'The Devil', '/assets/images/cards/devil.png', '24e4019ab25bf71c7bf994c8966dc36a', 0, 0, 0),
+    ('Башня', 'The Tower', '/assets/images/cards/tower.png', 'b9716124943a6d04feafc98a5f5df5b3', 0, 0, 0),
+    ('Звезда', 'The Star', '/assets/images/cards/star.png', '318f67f507aff065f3c08f322f30e633', 0, 0, 0),
+    ('Луна', 'The Moon', '/assets/images/cards/moon.png', '46039a83f6041d9ae6a8736da6a52d1c', 0, 0, 0),
+    ('Солнце', 'The Sun', '/assets/images/cards/sun.png', 'a28754f0999cd67987082c2aaf0bd9ad', 0, 0, 0),
+    ('Суд', 'Judgment', '/assets/images/cards/judgment.png', '5', 0, 0, 0),
+    ('Мир', 'The World', '/assets/images/cards/world.png', 'e768e80a2d17ea26dec0ff913cf7775b', 0, 0, 0),
+    ('Шут', 'The Fool', '/assets/images/cards/fool.png', 'a6aff02fa66e0ce2179983014576e59f', 0, 0, 0);

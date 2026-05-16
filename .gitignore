@@ -1,0 +1,39 @@
+# =========================
+# IntelliJ
+# =========================
+.idea/
+*.iml
+
+# =========================
+# Backend / Spring Boot
+# =========================
+arcana-exchange-backend/.gradle/
+arcana-exchange-backend/build/
+arcana-exchange-backend/out/
+
+# Logs
+*.log
+
+# Env
+.env
+application-local.properties
+application-local.yml
+
+# =========================
+# Frontend / Angular
+# =========================
+arcana-exchange-frontend/node_modules/
+arcana-exchange-frontend/dist/
+arcana-exchange-frontend/.angular/
+arcana-exchange-frontend/coverage/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Generated assets
+# =========================
+# arcana-exchange-frontend/src/assets/images/
