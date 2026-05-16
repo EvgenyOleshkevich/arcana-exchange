@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -75,7 +74,7 @@ public class PlayerService {
     }
 
     @Transactional
-    public PlayerDto updatePlayer(long id, String html) {
+    public void updatePlayer(long id, String html) {
         var player = playerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Player not found: " + id));
         validateUpdateCooldown(player);
@@ -84,6 +83,7 @@ public class PlayerService {
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();
 
         if (info.getSignature() == null ||
+                player.getVerificationCode() == null ||
                 !info.getSignature().contains(player.getVerificationCode())) {
             throw new RuntimeException("Verification Code does not match");
         }
@@ -136,21 +136,18 @@ public class PlayerService {
         }
         playerCardService.replacePlayerCards(player.getPlayerId(), playerCards);
         playerRepository.save(player);
-
+        /*
         List<PlayerCardDto> cards = parsedCards.stream()
                 .map(parsed -> {
                     Card card = cardsByCode.get(parsed.externalImageCode());
 
                     return new PlayerCardDto(
                             card.getCardId(),
-                            card.getNameRu(),
-                            card.getNameEn(),
-                            card.getImageUrl(),
                             parsed.quantity());
                 })
                 .toList();
 
-        return player.toDto(cards);
+        return player.toDto(cards);*/
     }
 
     @Transactional
@@ -187,6 +184,10 @@ public class PlayerService {
         var player = playerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Player not found: " + id));
         validateUpdateCooldown(player);
+
+        if (player.getVerificationCode() == null) {
+            throw new RuntimeException("Verification code is null, you need request new code");
+        }
 
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();
 

@@ -3,7 +3,7 @@ package arcana_exchange.player;
 import arcana_exchange.card.DTO.PlayerCardDto;
 import arcana_exchange.utils.enums.Server;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 public record PlayerDto(
@@ -12,8 +12,8 @@ public record PlayerDto(
         String avatarPath,
         Server server,
         int countCards,
-        LocalDateTime profileUpdatedAt,
-        LocalDateTime cardsUpdatedAt,
+        Instant profileUpdatedAt,
+        Instant cardsUpdatedAt,
         List<PlayerCardDto> cards
 ) {
 }

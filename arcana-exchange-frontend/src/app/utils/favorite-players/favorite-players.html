@@ -1,0 +1,23 @@
+@if (favoritePlayerIds().length > 0) {
+  <section class="favorite-players">
+    <h2>Избранные профили</h2>
+
+    <div class="favorite-players__list">
+      @for (playerId of favoritePlayerIds(); track playerId) {
+        <button
+          type="button"
+          class="favorite-player"
+          (click)="onSelect(playerId)"
+        >
+          <span class="favorite-player__name">
+            {{ player.nickname }}
+          </span>
+
+          <small class="favorite-player__uid">
+            UID: {{ player.playerId }}
+          </small>
+        </button>
+      }
+    </div>
+  </section>
+}

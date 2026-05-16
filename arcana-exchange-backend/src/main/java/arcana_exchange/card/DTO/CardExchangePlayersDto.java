@@ -5,7 +5,7 @@ import arcana_exchange.player.PlayerDto;
 import java.util.List;
 
 public record CardExchangePlayersDto(
-        List<PlayerDto> offers,
-        List<PlayerDto> wanted
+        List<PlayerDto> offeredBy,
+        List<PlayerDto> wantedBy
 ) {
 }

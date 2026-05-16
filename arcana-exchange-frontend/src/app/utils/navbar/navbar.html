@@ -1,0 +1,22 @@
+<header class="navbar">
+  <div class="navbar__content">
+        <div class="navbar__left">
+            <a class="navbar__brand" routerLink="/cards">Arcana Exchange</a>
+        </div>
+
+        <nav class="navbar__center">
+            <a
+                routerLink="/cards"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">Cards</a>
+            <a
+                routerLink="/player"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">Player</a>
+            <a
+                routerLink="/about"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">About</a>
+        </nav>
+    </div>
+</header>

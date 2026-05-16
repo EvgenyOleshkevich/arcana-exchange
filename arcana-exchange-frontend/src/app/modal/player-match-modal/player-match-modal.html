@@ -1,0 +1,93 @@
+<div class="match-modal-backdrop" (click)="onClose()">
+  <section class="match-modal" (click)="$event.stopPropagation()">
+
+    <header class="match-modal__header">
+      <div>
+        <p class="eyebrow">Perfect match</p>
+        <h2>Обмен с {{ match.player.name }}</h2>
+        <p class="match-modal__uid">
+          UID: {{ match.player.playerId }}
+        </p>
+      </div>
+
+      <button
+        type="button"
+        class="match-modal__close"
+        (click)="onClose()"
+      >
+        ✕
+      </button>
+    </header>
+
+    <div class="match-modal__columns">
+
+      <section class="match-modal__column">
+        <div class="match-modal__column-header">
+          <h3>Вы отдаёте</h3>
+          <span>{{ cardsYouCanGive().length }}</span>
+        </div>
+
+        <div class="match-card-grid">
+          @for (card of cardsYouCanGive(); track card.cardId) {
+            <article class="match-card">
+              <img
+                class="match-card__image"
+                [src]="card.imageUrl"
+                [alt]="card.nameRu"
+                [title]="card.nameRu"
+              />
+
+              <p class="match-card__name">
+                {{ card.nameRu }}
+              </p>
+            </article>
+          }
+        </div>
+      </section>
+
+      <div class="match-modal__swap-icon">
+        ⇄
+      </div>
+
+      <section class="match-modal__column">
+        <div class="match-modal__column-header">
+          <h3>Вы получаете</h3>
+          <span>{{ cardsYouCanReceive().length }}</span>
+        </div>
+
+        <div class="match-card-grid">
+          @for (card of cardsYouCanReceive(); track card.cardId) {
+            <article class="match-card">
+              <img
+                class="match-card__image"
+                [src]="card.imageUrl"
+                [alt]="card.nameRu"
+                [title]="card.nameRu"
+              />
+
+              <p class="match-card__name">
+                {{ card.nameRu }}
+              </p>
+            </article>
+          }
+        </div>
+      </section>
+
+    </div>
+
+    <footer class="match-modal__footer">
+      <p>
+        Свяжитесь с игроком внутри Genshin Impact по UID.
+      </p>
+
+      <button
+        type="button"
+        class="match-modal__copy"
+        (click)="onCopyUid()"
+      >
+        Скопировать UID
+      </button>
+    </footer>
+
+  </section>
+</div>

@@ -2,12 +2,9 @@ package arcana_exchange.match;
 
 import arcana_exchange.card.CardService;
 import arcana_exchange.card.DTO.PlayerCardDto;
-import arcana_exchange.player.Player;
-import arcana_exchange.player.PlayerDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import arcana_exchange.match.PlayerCardRepository;
 
 import java.util.List;
 
@@ -28,9 +25,6 @@ public class PlayerCardService {
         return pcs.stream()
                 .map(pc -> new PlayerCardDto(
                         pc.getCard().getCardId(),
-                        pc.getCard().getNameRu(),
-                        pc.getCard().getNameEn(),
-                        pc.getCard().getImageUrl(),
                         pc.getQuantity()
                 ))
                 .toList();

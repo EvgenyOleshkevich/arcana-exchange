@@ -21,12 +21,17 @@ public class PlayerController {
         return playerService.createPlayer(playerId);
     }
 
-    @PutMapping("/{playerId}/cards/html")
-    public PlayerDto updatePlayer(
+    @PutMapping("/{playerId}/cards")
+    public void updatePlayer(
             @PathVariable long playerId,
             @RequestBody String html
     ) {
-        return playerService.updatePlayer(playerId, html);
+        playerService.updatePlayer(playerId, html);
+    }
+
+    @PutMapping("/{playerId}/info")
+    public PlayerDto updatePlayerInfo(@PathVariable long playerId ) {
+        return playerService.updatePlayerInfo(playerId);
     }
 
     @PostMapping("/{playerId}/verification-code")
@@ -45,9 +50,7 @@ public class PlayerController {
     }
 
     @GetMapping("/{playerId}/match")
-    public List<MatchDto> getPlayersPerfectMatch(
-            @PathVariable long playerId
-    ) {
+    public List<MatchDto> getPlayersPerfectMatch(@PathVariable long playerId) {
         return cardService.getPlayersPerfectMatch(playerId);
     }
 }

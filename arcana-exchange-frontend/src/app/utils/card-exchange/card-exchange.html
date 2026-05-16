@@ -1,0 +1,147 @@
+<section class="card-exchange-panel">
+
+  <header class="card-exchange-panel__header">
+
+    <div class="card-exchange-panel__card-info">
+
+      @if (card(); as card) {
+        <img
+          class="card-exchange-panel__image"
+          [src]="card.imageUrl"
+          [alt]="card.nameRu"
+        />
+
+        <div class="card-exchange-panel__title-group">
+          <p class="card-exchange-panel__subtitle">
+            Lunar Arcana
+          </p>
+
+          <h2 class="card-exchange-panel__title">
+            {{ card.nameRu }}
+          </h2>
+        </div>
+      }
+
+    </div>
+
+    <button
+      type="button"
+      class="card-exchange-panel__close"
+      (click)="onClose()"
+    >
+      ✕
+    </button>
+
+  </header>
+
+  <div class="card-exchange-panel__tabs">
+
+    <button
+      type="button"
+      class="card-exchange-panel__tab"
+      [class.active]="offersSelected()"
+      (click)="onOfferedBy()"
+    >
+      Предлагают
+      <span>
+        {{ exchange.offeredBy.length }}
+      </span>
+    </button>
+
+    <button
+      type="button"
+      class="card-exchange-panel__tab"
+      [class.active]="!offersSelected()"
+      (click)="onWantedBy()"
+    >
+      Ищут
+      <span>
+        {{ exchange.wantedBy.length }}
+      </span>
+    </button>
+
+  </div>
+
+  <div class="card-exchange-panel__content">
+
+    @if (offersSelected()) {
+
+      @if (exchange.offeredBy.length > 0) {
+
+        <div class="player-list">
+          @for (player of exchange.offeredBy; track player.playerId) {
+            <a
+              class="player-card"
+              [routerLink]="['/player', player.playerId]"
+            >
+                <div class="player-card__left">
+                    <img
+                    class="player-card__avatar"
+                    [src]="'/assets/images/icons/' + player.avatarPath + '.png'"
+                    [alt]="player.name"
+                    />
+                </div>
+
+                <div class="player-card__main">
+                    <h3 class="player-card__name">
+                        {{ player.name }}
+                    </h3>
+
+                    <p class="player-card__uid">
+                        UID: {{ player.playerId }}
+                    </p>
+                </div>
+
+                <div class="player-card__meta">
+                    <span class="player-card__cards">
+                        {{ player.countCards }} карт
+                    </span>
+                </div>
+            </a>
+          }
+        </div>
+
+      } @else {
+        <div class="empty-state">
+          Никто не предлагает эту карту
+        </div>
+      }
+    } @else {
+      @if (exchange.wantedBy.length > 0) {
+
+        <div class="player-list">
+          @for (player of exchange.wantedBy; track player.playerId) {
+            <a
+              class="player-card"
+              [routerLink]="['/player', player.playerId]"
+            >
+                <div class="player-card__left">
+                    <img
+                    class="player-card__avatar"
+                    [src]="'/assets/images/icons/' + player.avatarPath + '.png'"
+                    [alt]="player.name"
+                    />
+                </div>
+
+                <div class="player-card__main">
+                    <h3 class="player-card__name">
+                        {{ player.name }}
+                    </h3>
+
+                    <p class="player-card__uid">
+                        UID: {{ player.playerId }}
+                    </p>
+                </div>
+            </a>
+          }
+        </div>
+
+      } @else {
+        <div class="empty-state">
+          Никто не ищет эту карту
+        </div>
+      }
+
+    }
+  </div>
+</section>

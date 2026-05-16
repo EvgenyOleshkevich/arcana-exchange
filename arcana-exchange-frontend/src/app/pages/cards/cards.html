@@ -1,0 +1,65 @@
+<section class="page cards-page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Arcana Exchange</p>
+      <h1>Карты Лунных Аркан</h1>
+      <p class="page-description">
+        Выберите карту, чтобы посмотреть игроков, которые предлагают её или ищут для обмена.
+      </p>
+    </div>
+
+    <label class="server-select">
+      <span>Сервер</span>
+
+      <div class="server-switch">
+        @for (server of servers; track server.value) {
+            <button
+            type="button"
+            class="server-button"
+            [class.active]="selectedServer() === server.value"
+            (click)="onServerChange(server.value)"
+            >
+            {{ server.label }}
+            </button>
+        }
+      </div>
+    </label>
+  </header>
+
+  <main class="cards-layout">
+    <section class="cards-panel">
+      <div class="panel-header">
+        <div>
+          <h2>Все карты</h2>
+          <p>Всего карт: {{ cards().length }}</p>
+        </div>
+      </div>
+
+      <app-card-list
+        (cardSelected)="onLoadPlayersExchangingCard($event)"
+      />
+    </section>
+
+    <aside class="exchange-panel">
+      @if (cardExchange() && selectedCardId()) {
+        <app-card-exchange
+          [exchange]="cardExchange()!"
+          [cardId]="selectedCardId()!"
+          (close)="onCloseExchange()"
+        />
+      } @else {
+        <div class="empty-exchange">
+          <div class="empty-card-preview">
+            ✦
+          </div>
+
+          <h2>Выберите карту</h2>
+          <p>
+            Здесь появится изображение карты, а также вкладки со спросом и предложением
+            для выбранного сервера.
+          </p>
+        </div>
+      }
+    </aside>
+  </main>
+</section>

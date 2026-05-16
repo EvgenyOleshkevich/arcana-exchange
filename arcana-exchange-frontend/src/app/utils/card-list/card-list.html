@@ -1,0 +1,56 @@
+<div class="card-list">
+  @for (card of cards(); track card.cardId) {
+    @let quantity = playerCards?.get(card.cardId) ?? 0;
+    @let isPlayerMode = playerCards !== null;
+    @let isMissing = isPlayerMode && quantity === 0;
+
+    <button
+      type="button"
+      class="arcana-card"
+      [class.arcana-card--missing]="isMissing"
+      (click)="onSelectCard(card)"
+    >
+      <div class="arcana-card__image-wrap">
+        <img
+          class="arcana-card__image"
+          [src]="card.imageUrl"
+          [alt]="card.nameRu"
+        />
+
+        @if (isPlayerMode) {
+          <span class="arcana-card__badge">
+            x{{ quantity }}
+          </span>
+        }
+      </div>
+
+      <div class="arcana-card__body">
+        <h3 class="arcana-card__title">
+          {{ card.nameRu }}
+        </h3>
+
+        @if (isPlayerMode) {
+          @if (quantity > 1) {
+            <p class="arcana-card__status arcana-card__status--trade">
+              Можно обменять
+            </p>
+          } @else if (quantity === 1) {
+            <p class="arcana-card__status">
+              Есть
+            </p>
+          } @else {
+            <p class="arcana-card__status arcana-card__status--missing">
+              Нет карты
+            </p>
+          }
+        } @else {
+          <div class="arcana-card__stats">
+            <span title="Предлагают">↔ {{ card.countOffered }}</span>
+            <span title="Есть у игроков">✦ {{ card.countOwned }}</span>
+            <span title="Хотят">♥ {{ card.countWanted }}</span>
+          </div>
+        }
+      </div>
+    </button>
+  }
+</div>
