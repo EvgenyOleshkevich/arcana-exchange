@@ -71,6 +71,7 @@ public interface PlayerCardRepository
         WHERE pc.card.cardId = :cardId
           AND pc.quantity > 1
           AND pc.player.server = :server
+        ORDER BY function('RANDOM')
     """)
     List<Player> findPlayersOfferingCard(
             long cardId,
@@ -86,6 +87,7 @@ public interface PlayerCardRepository
      AND pc.card_id = :cardId
     WHERE p.server = :server
       AND COALESCE(pc.quantity, 0) = 0
+    ORDER BY RANDOM()
     LIMIT 20
     """, nativeQuery = true)
     List<Player> findPlayersWantingCard(
@@ -122,6 +124,8 @@ public interface PlayerCardRepository
             AND other_card.quantity > 1
             AND COALESCE(my_same_card.quantity, 0) = 0
       )
+    ORDER BY RANDOM()
+    LIMIT 20
     """, nativeQuery = true)
     List<Player> findPerfectMatches(long playerId);
 }
