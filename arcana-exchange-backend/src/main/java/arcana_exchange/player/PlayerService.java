@@ -10,10 +10,8 @@ import arcana_exchange.match.PlayerCard;
 import arcana_exchange.match.PlayerCardId;
 import arcana_exchange.match.PlayerCardRepository;
 import arcana_exchange.match.PlayerCardService;
-import arcana_exchange.utils.AvatarIconService;
-import arcana_exchange.utils.CountCardChecker;
-import arcana_exchange.utils.TarotHtmlParser;
-import arcana_exchange.utils.VerificationCodeGenerator;
+import arcana_exchange.utils.*;
+import arcana_exchange.utils.enums.DataType;
 import arcana_exchange.utils.enums.Server;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +33,7 @@ public class PlayerService {
     private final AvatarIconService avatarIconService;
     private final PlayerCardService playerCardService;
     private final TarotHtmlParser htmlParser;
+    private final TarotJsonParser jsonParser;
     private final PlayerRepository playerRepository;
     private final PlayerCardRepository playerCardRepository;
     private final CardRepository cardRepository;
@@ -74,7 +73,7 @@ public class PlayerService {
     }
 
     @Transactional
-    public void updatePlayer(long id, String html) {
+    public void updatePlayer(long id, String data, DataType dataType) {
         var player = playerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Player not found: " + id));
         validateUpdateCooldown(player);
@@ -88,7 +87,13 @@ public class PlayerService {
             throw new RuntimeException("Verification Code does not match");
         }
 
-        var parsedCards = htmlParser.parse(html);
+        var parsedCards =
+                switch (dataType) {
+                    case JSON -> jsonParser.parse(data);
+                    case HTML -> htmlParser.parse(data);
+                };
+
+
         if (parsedCards.size() != parsedCards.stream()
                 .map(ParsedCard::externalImageCode)
                 .distinct()

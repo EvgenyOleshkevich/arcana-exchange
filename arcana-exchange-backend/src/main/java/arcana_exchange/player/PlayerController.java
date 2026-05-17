@@ -2,6 +2,7 @@ package arcana_exchange.player;
 
 import arcana_exchange.card.CardService;
 import arcana_exchange.match.MatchDto;
+import arcana_exchange.utils.enums.DataType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +22,20 @@ public class PlayerController {
         return playerService.createPlayer(playerId);
     }
 
-    @PutMapping("/{playerId}/cards")
-    public void updatePlayer(
+    @PutMapping("/{playerId}/cards/html")
+    public void updatePlayerCardHtml(
             @PathVariable long playerId,
             @RequestBody String html
     ) {
-        playerService.updatePlayer(playerId, html);
+        playerService.updatePlayer(playerId, html, DataType.HTML);
+    }
+
+    @PutMapping("/{playerId}/cards/json")
+    public void updatePlayerCardJson(
+            @PathVariable long playerId,
+            @RequestBody String json
+    ) {
+        playerService.updatePlayer(playerId, json, DataType.JSON);
     }
 
     @PutMapping("/{playerId}/info")
