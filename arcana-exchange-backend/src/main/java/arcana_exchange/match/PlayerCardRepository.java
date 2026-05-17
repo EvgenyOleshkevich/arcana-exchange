@@ -87,7 +87,7 @@ public interface PlayerCardRepository
     """, nativeQuery = true)
     List<Player> findPlayersWantingCard(
             long cardId,
-            Server server
+            String server
     );
 
     @Query(value = """

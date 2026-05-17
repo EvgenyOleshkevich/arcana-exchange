@@ -38,6 +38,10 @@
       </div>
 
       <div class="player-hero__actions">
+        <a [routerLink]="['/player', player.playerId]">
+          Назад к профилю
+        </a>
+
         <button type="button" (click)="onUpdatePlayerInfo()">
           Обновить профиль
         </button>
@@ -95,7 +99,7 @@
         <button
           type="button"
           class="cards-update-tabs__tab"
-          [class.active]="!JsonModeSelected()"
+          [class.active]="JsonModeSelected()"
           (click)="onSelectUpdateJson()"
         >
           JSON
@@ -104,7 +108,7 @@
         <button
           type="button"
           class="cards-update-tabs__tab"
-          [class.active]="JsonModeSelected()"
+          [class.active]="!JsonModeSelected()"
           (click)="onSelectUpdateHtml()"
         >
           HTML
@@ -130,7 +134,7 @@
             <h3>Как обновить через JSON</h3>
             <ol>
               <li>Войдите в свой аккаунт HoYolab на другой вкладке браузера.</li>
-              <li>Убедитесь, что ваш профиь открыт, иначе вы увидите сообщение: Data is not public for the user.</li>
+              <li>Убедитесь, что ваш профиль открыт, иначе вы увидите сообщение: Data is not public for the user.</li>
               <li>Перейдите по ссылке
                 <a
                     [href]="jsonLink()"
@@ -161,43 +165,43 @@
               <li>Зайдите на страницу вашего профиля Genshin Impact в HoYolab.
                 <img
                     class="instruction__picture"
-                    [src]="'/assets/images/icons/profile.png'"
-                    [alt]="player.name"
+                    [src]="'/assets/images/instruction/profile.png'"
+                    alt="profile"
                 />
               </li>
               <li>Найдите и откройте страницу "Коллекция Лунных арканов".
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards.png'"
-                    [alt]="player.name"
+                    alt="cards"
                 />
               </li>
               <li>Откройте инструменты разработчика (нажав F12).
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards_f12.png'"
-                    [alt]="player.name"
+                    alt="cards_f12"
                 />
               </li>
               <li>Откройте вкладку Elements, если она не открыта.
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards_f12_elements.png'"
-                    [alt]="player.name"
+                    alt="cards_f12_elements"
                 />
               </li>
               <li>Нажмите правой кнопкой мыши на "html lang...".
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards_html.png'"
-                    [alt]="player.name"
+                    alt="cards_html"
                 />
               </li>
               <li>Нажмите "Copy" -> "Copy Element".
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards_copy.png'"
-                    [alt]="player.name"
+                    alt="cards_copy"
                 />
               </li>
               <li>Вставьте HTML в поле выше и отправьте форму.</li>

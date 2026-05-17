@@ -23,6 +23,7 @@ public class Player {
     @Column(name = "verification_code")
     private String verificationCode;
     @Enumerated(EnumType.STRING)
+    @Column(name = "server")
     private Server server;
     @Column(name = "count_cards")
     private int countCards;

@@ -5,6 +5,9 @@ export function verifyId(playerId: string) : boolean {
     if (playerId.length === 10) {
         return playerId.startsWith('18');
     }
+    if (playerId.length === 3) {
+        return playerId[0] === '1';
+    }
     return false;
 }
 

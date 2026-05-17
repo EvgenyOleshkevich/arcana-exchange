@@ -1,4 +1,4 @@
-import { Component, computed, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import { Component, computed, EventEmitter, inject, input, Input, Output, signal } from '@angular/core';
 import { CardExchangePlayers } from '../../model/CardExchangePlayers';
 import { CardsStore } from '../../store/cards-store';
 import { CommonModule } from '@angular/common';
@@ -13,15 +13,15 @@ import { RouterLink } from '@angular/router';
 })
 export class CardExchange {
   private readonly cardsStore = inject(CardsStore);
-  @Input({ required: true }) exchange!: CardExchangePlayers;
-  @Input({ required: true }) cardId!: number;
+  readonly exchange = input.required<CardExchangePlayers>();
+  readonly cardId = input.required<number>();
 
   @Output() readonly close = new EventEmitter<void>();
 
   readonly offersSelected = signal<boolean>(true);
 
 
-  readonly card = computed(() => this.cardsStore.getCardById(this.cardId));
+  readonly card = computed(() => this.cardsStore.getCardById(this.cardId()));
 
   onOfferedBy() {
     this.offersSelected.set(true);

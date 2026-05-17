@@ -1,16 +1,16 @@
-@if (favoritePlayerIds().length > 0) {
+@if (favoritePlayers().length > 0) {
   <section class="favorite-players">
     <h2>Избранные профили</h2>
 
     <div class="favorite-players__list">
-      @for (playerId of favoritePlayerIds(); track playerId) {
+      @for (player of favoritePlayers(); track player.playerId) {
         <button
           type="button"
           class="favorite-player"
-          (click)="onSelect(playerId)"
+          (click)="onSelect(player.playerId )"
         >
           <span class="favorite-player__name">
-            {{ player.nickname }}
+            {{ player.name }}
           </span>
 
           <small class="favorite-player__uid">

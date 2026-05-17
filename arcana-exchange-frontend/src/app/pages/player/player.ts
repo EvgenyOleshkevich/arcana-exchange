@@ -1,7 +1,8 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { PlayerService } from '../../services/player-service';
 import { Player } from '../../model/player';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { map } from 'rxjs';
 import { PlayerMatch } from '../../model/PlayerMatch';
 import { CardService } from '../../services/card-service';
 import { CardExchangePlayers } from '../../model/CardExchangePlayers';
@@ -12,17 +13,20 @@ import { FormsModule } from '@angular/forms';
 import { getServerLabel } from '../../model/Enums';
 import { PlayerMatchModal } from '../../modal/player-match-modal/player-match-modal';
 import { parseId } from '../../utils/functions';
+import { FavoritePlayersService } from '../../services/favorite-players-service';
+import { FavoritePlayersComponent } from '../../utils/favorite-players/favorite-players';
 
 @Component({
   selector: 'app-player',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe, CardListComponent, CardExchange, PlayerMatchModal],
+  imports: [CommonModule, FormsModule, RouterLink, DatePipe, CardListComponent, CardExchange, PlayerMatchModal, FavoritePlayersComponent],
   templateUrl: './player.html',
   styleUrl: './player.scss',
 })
 export class PlayerComponent implements OnInit {
-  private playerService = inject(PlayerService);
-  private cardService = inject(CardService);
+  private readonly playerService = inject(PlayerService);
+  private readonly cardService = inject(CardService);
+  private readonly favoritePlayersService = inject(FavoritePlayersService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   readonly player = signal<Player | null>(null);
@@ -49,18 +53,37 @@ export class PlayerComponent implements OnInit {
     );
   });
 
-  playerServer = computed(() => {
+  readonly playerServer = computed(() => {
     const player = this.player();
     return player ? getServerLabel(player.server) : '';
   });
 
-  ngOnInit() {
-    const playerId = parseId(this.route.snapshot.paramMap.get('playerId'));
-
-    if (playerId) {
-      this.loadPlayer(playerId);
-      this.loadMatches(playerId);
+  readonly isFavorite = computed(() => {
+    const player = this.player();
+    if (!player) {
+      return false;
     }
+
+    return this.favoritePlayersService.isFavorite(player.playerId);
+  });
+
+  ngOnInit() {
+    this.route.paramMap
+      .pipe(
+        map(params => parseId(params.get('playerId')))
+      )
+      .subscribe(playerId => {
+        this.player.set(null);
+        this.matches.set([]);
+        this.selectedCardId.set(null);
+        this.cardExchange.set(null);
+        this.showPlayerSearch.set(false);
+        this.errorLoadPlayer.set(null);
+
+        if (playerId) {
+          this.loadPlayer(playerId);
+        }
+      });
   }
 
   loadPlayer(playerId: number) {
@@ -69,7 +92,26 @@ export class PlayerComponent implements OnInit {
     this.playerService.getPlayer(playerId).subscribe({
       next: player => {
         this.player.set(player);
+        this.loadMatches(playerId);
+      },
+      error: err => {
+        console.error(err);
 
+        if (err.status === 404) {
+          this.cratePlayer(playerId);
+          return;
+        }
+      },
+    });
+  }
+
+  cratePlayer(playerId: number) {
+    this.errorLoadPlayer.set(null);
+
+    this.playerService.createPlayer(playerId).subscribe({
+      next: player => {
+        this.player.set(player);
+        this.loadMatches(playerId);
       },
       error: err => {
         console.error(err);
@@ -154,11 +196,12 @@ export class PlayerComponent implements OnInit {
     this.showPlayerSearch.update(value => !value);
   }
 
-  onTogglePlayonGoToPlayerProfileerSearch() {
+  onToggleFavorite() {
     const player = this.player();
     if (!player) {
       return;
     }
+    this.favoritePlayersService.toggleFavorite(player);
   }
 
   onOpenFavoritePlayer(playerId: number) {

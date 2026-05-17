@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FavoritePlayer } from '../../model/FavoritePlayer';
+import { FavoritePlayersService } from '../../services/favorite-players-service';
 
 @Component({
   selector: 'app-favorite-players',
@@ -10,29 +11,11 @@ import { FavoritePlayer } from '../../model/FavoritePlayer';
   styleUrl: './favorite-players.scss',
 })
 export class FavoritePlayersComponent {
+  private readonly favoritePlayersService = inject(FavoritePlayersService);
   @Output()
   readonly playerSelected = new EventEmitter<number>();
 
-  private loadFavorites(): FavoritePlayer[] {
-    const raw = localStorage.getItem('favoritePlayers');
-
-    if (!raw) {
-      return [];
-    }
-
-    try {
-      const parsed = JSON.parse(raw);
-
-      if (!Array.isArray(parsed)) {
-        return [];
-      }
-
-      return parsed.slice(0, 5);
-
-    } catch {
-      return [];
-    }
-  }
+  readonly favoritePlayers = this.favoritePlayersService.favoritePlayers;
 
   onSelect(playerId: number) {
     this.playerSelected.emit(playerId);

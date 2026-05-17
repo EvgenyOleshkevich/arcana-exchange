@@ -5,12 +5,12 @@ import lombok.Data;
 @Data
 public class PlayerInfoResponse {
     private PlayerInfo playerInfo;
+    private String region;
 
     @Data
     public static class PlayerInfo {
         private String nickname;
         private String signature;
-        private String region;
         private ProfilePicture profilePicture;
     }
 

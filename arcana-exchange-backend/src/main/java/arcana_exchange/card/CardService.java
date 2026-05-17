@@ -13,10 +13,7 @@ import arcana_exchange.card.CardRepository;
 import arcana_exchange.match.PlayerCardRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +24,9 @@ public class CardService {
     private final PlayerRepository playerRepository;
 
     public List<Card> getAllCards() {
-        return cardRepository.findAll();
+        var cards = cardRepository.findAll();
+        cards.sort(Comparator.comparing(Card::getCardId));
+        return cards;
     }
 
     @Transactional
@@ -60,7 +59,7 @@ public class CardService {
     }
 
     public List<PlayerDto> getPlayersWantingCard(long cardId, Server server) {
-        return entityToDto(playerCardRepository.findPlayersWantingCard(cardId, server));
+        return entityToDto(playerCardRepository.findPlayersWantingCard(cardId, server.name()));
     }
 
     public List<MatchDto> getPlayersPerfectMatch(long playerId) {

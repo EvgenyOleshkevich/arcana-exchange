@@ -19,7 +19,7 @@ export class PlayerService {
 
   updateCardsHtml(playerId: number, data: string) {
     return this.http.put<void>(
-      `/api/player/${playerId}/cards`,
+      `/api/player/${playerId}/cards/html`,
       data,
       {
         headers: {
@@ -31,7 +31,7 @@ export class PlayerService {
 
   updateCardsJson(playerId: number, data: string) {
     return this.http.put<void>(
-      `/api/player/${playerId}/cards`,
+      `/api/player/${playerId}/cards/json`,
       data,
       {
         headers: {
@@ -46,8 +46,14 @@ export class PlayerService {
   }
 
   getVerificationCode(playerId: number) {
-    return this.http.post<string>(`/api/player/${playerId}/verification-code`, null);
-  }
+  return this.http.post(
+    `/api/player/${playerId}/verification-code`,
+    null,
+    {
+      responseType: 'text',
+    }
+  );
+}
 
   verifyCode(playerId: number) {
     return this.http.get<boolean>(`/api/player/${playerId}/verify`);

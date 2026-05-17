@@ -14,8 +14,10 @@ import arcana_exchange.utils.*;
 import arcana_exchange.utils.enums.DataType;
 import arcana_exchange.utils.enums.Server;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.time.Duration;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PlayerService {
+    private static final boolean DEBUG = true;
     private static final Duration UPDATE_COOLDOWN = Duration.ofMinutes(1);
     private static final Duration UPDATE_CARD_COOLDOWN = Duration.ofMinutes(1);
     private final EnkaService enkaService;
@@ -44,7 +47,7 @@ public class PlayerService {
 
     public PlayerDto getPlayer(long playerId) {
         Player player = playerRepository.findById(playerId)
-                .orElseThrow(() -> new RuntimeException("Player not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found"));
 
         List<PlayerCardDto> cards = playerCardService.entityToDto(playerCardRepository.findByIdPlayerId(playerId));
         return player.toDto(cards);
@@ -62,8 +65,9 @@ public class PlayerService {
         var player = Player.builder()
                 .playerId(id)
                 .name(info.getNickname())
+                .avatarPath(avatarIconService.getIconPath(info.getProfilePicture().getId()))
                 .verificationCode(VerificationCodeGenerator.generateCode())
-                .server(getServer(info.getRegion()))
+                .server(getServer(response.getRegion()))
                 .countCards(0)
                 .profileUpdatedAt(Instant.now())
                 .cardsUpdatedAt(Instant.now())
@@ -81,10 +85,12 @@ public class PlayerService {
 
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();
 
-        if (info.getSignature() == null ||
-                player.getVerificationCode() == null ||
-                !info.getSignature().contains(player.getVerificationCode())) {
-            throw new RuntimeException("Verification Code does not match");
+        if (!DEBUG) {
+            if (info.getSignature() == null ||
+                    player.getVerificationCode() == null ||
+                    !info.getSignature().contains(player.getVerificationCode())) {
+                throw new RuntimeException("Verification Code does not match");
+            }
         }
 
         var parsedCards =
@@ -127,10 +133,11 @@ public class PlayerService {
                 .map(parsed -> {
                     Card card = getCard(parsed, cardsByCode, cardsByNameRu, cardsByNameEn, updatedCards);
 
-
                     return PlayerCard.builder()
                             .id(new PlayerCardId(player.getPlayerId(), card.getCardId()))
                             .quantity(parsed.quantity())
+                            .player(player)
+                            .card(card)
                             .build();
                 })
                 .toList();
@@ -244,6 +251,9 @@ public class PlayerService {
 
 
     private void validateUpdateCooldown(Player player) {
+        if (DEBUG) {
+            return;
+        }
         Instant lastUpdatedAt = player.getProfileUpdatedAt();
 
         if (lastUpdatedAt == null) {
@@ -261,6 +271,9 @@ public class PlayerService {
     }
 
     private void validateUpdateCardCooldown(Player player) {
+        if (DEBUG) {
+            return;
+        }
         Instant lastUpdatedAt = player.getCardsUpdatedAt();
 
         if (lastUpdatedAt == null) {

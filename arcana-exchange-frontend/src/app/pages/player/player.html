@@ -225,6 +225,5 @@
 @if (selectedPlayerMatch(); as match) {
     <app-player-match-modal
         [match]="match"
-        (submit)="submitMatchInput($event)"
         (close)="onCloseMatchModal()"/>
 }

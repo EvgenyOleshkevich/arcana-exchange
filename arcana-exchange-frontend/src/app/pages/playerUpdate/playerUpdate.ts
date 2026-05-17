@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Player } from '../../model/player';
 import { PlayerService } from '../../services/player-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { getServerLabel, toHoyolabServer } from '../../model/Enums';
@@ -10,7 +10,7 @@ import { parseId } from '../../utils/functions';
 @Component({
   selector: 'app-player-update',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './playerUpdate.html',
   styleUrl: './playerUpdate.scss',
 })
