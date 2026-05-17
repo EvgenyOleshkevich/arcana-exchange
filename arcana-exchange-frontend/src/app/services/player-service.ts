@@ -17,13 +17,25 @@ export class PlayerService {
     return this.http.post<Player>(`/api/player/${playerId}/create`, null);
   }
 
-  updateCards(playerId: number, html: string) {
+  updateCardsHtml(playerId: number, data: string) {
     return this.http.put<void>(
       `/api/player/${playerId}/cards`,
-      html,
+      data,
       {
         headers: {
           'Content-Type': 'text/plain',
+        },
+      }
+    );
+  }
+
+  updateCardsJson(playerId: number, data: string) {
+    return this.http.put<void>(
+      `/api/player/${playerId}/cards`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
         },
       }
     );

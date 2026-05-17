@@ -1,33 +1,54 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Player } from '../../model/player';
 import { PlayerService } from '../../services/player-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { getServerLabel, toHoyolabServer } from '../../model/Enums';
+import { parseId } from '../../utils/functions';
 
 @Component({
-  selector: 'app-profile',
+  selector: 'app-player-update',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './profile.html',
-  styleUrl: './profile.scss',
+  templateUrl: './playerUpdate.html',
+  styleUrl: './playerUpdate.scss',
 })
 export class PlayerUpdateComponent {
   private playerService = inject(PlayerService);
   private readonly route = inject(ActivatedRoute);
   private router = inject(Router);
+
   readonly player = signal<Player | null>(null);
   readonly verificationCode = signal<string | null>(null);
   readonly verifyResult = signal<boolean>(false);
+
+  readonly JsonModeSelected = signal<boolean>(true);
+  inputJson = '';
   inputHTML = '';
+
   readonly errorLoadPlayer = signal<string | null>(null);
   readonly errorUpdateCards = signal<string | null>(null);
   readonly errorVerify = signal<string | null>(null);
 
-  ngOnInit() {
-    const playerId = Number(this.route.snapshot.paramMap.get('playerId'));
+  readonly playerServer = computed(() => {
+    const player = this.player();
+    return player ? getServerLabel(player.server) : '';
+  });
 
-    if (!playerId || Number.isNaN(playerId)) {
+  readonly jsonLink = computed(() => {
+    const player = this.player();
+    if (!player) {
+      return '';
+    }
+    const serverParam = toHoyolabServer(player.server);
+    return `https://sg-public-api.hoyolab.com/event/game_record/genshin/api/role_combat?server=${serverParam}&role_id=${player?.playerId}`
+  });
+
+  ngOnInit() {
+    const playerId = parseId(this.route.snapshot.paramMap.get('playerId'));
+
+    if (!playerId) {
       this.router.navigate(['/player']);
       return;
     }
@@ -46,22 +67,51 @@ export class PlayerUpdateComponent {
     });
   }
 
-  onUpdateCards() {
+  onUpdateCardsHtml() {
     const player = this.player();
     if (!player) {
       return;
     }
     this.errorUpdateCards.set(null);
 
-    this.playerService.updateCards(player.playerId, this.inputHTML).subscribe({
+    this.playerService.updateCardsHtml(player.playerId, this.inputHTML).subscribe({
       next: () => {
-        this.router.navigate([`/profile/${player.playerId}`]);
+        this.router.navigate(['/player', player.playerId]);
       },
       error: (err) => {
         console.error(err);
         this.errorUpdateCards.set(err.error?.message ?? 'unknown error');
       },
     });
+  }
+
+  onUpdateCardsJson() {
+    const player = this.player();
+    if (!player) {
+      return;
+    }
+
+    this.errorUpdateCards.set(null);
+
+    this.playerService.updateCardsJson(player.playerId, this.inputJson).subscribe({
+      next: () => {
+        this.router.navigate(['/player', player.playerId]);
+      },
+      error: err => {
+        console.error(err);
+        this.errorUpdateCards.set(err.error?.message ?? 'unknown error');
+      },
+    });
+  }
+
+  onSelectUpdateHtml() {
+    this.JsonModeSelected.set(false);
+    this.errorUpdateCards.set(null);
+  }
+
+  onSelectUpdateJson() {
+    this.JsonModeSelected.set(true);
+    this.errorUpdateCards.set(null);
   }
 
   onUpdatePlayerInfo() {
@@ -83,7 +133,6 @@ export class PlayerUpdateComponent {
   }
 
   onRequestVerificationCode() {
-
     const player = this.player();
     if (!player) {
       return;

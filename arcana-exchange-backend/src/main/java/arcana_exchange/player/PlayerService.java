@@ -93,7 +93,6 @@ public class PlayerService {
                     case HTML -> htmlParser.parse(data);
                 };
 
-
         if (parsedCards.size() != parsedCards.stream()
                 .map(ParsedCard::externalImageCode)
                 .distinct()

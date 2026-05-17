@@ -11,6 +11,7 @@ import { CardExchange } from '../../utils/card-exchange/card-exchange';
 import { FormsModule } from '@angular/forms';
 import { getServerLabel } from '../../model/Enums';
 import { PlayerMatchModal } from '../../modal/player-match-modal/player-match-modal';
+import { parseId } from '../../utils/functions';
 
 @Component({
   selector: 'app-player',
@@ -54,10 +55,12 @@ export class PlayerComponent implements OnInit {
   });
 
   ngOnInit() {
-    const playerId = Number(this.route.snapshot.paramMap.get('playerId'));
+    const playerId = parseId(this.route.snapshot.paramMap.get('playerId'));
 
-    this.loadPlayer(playerId);
-    this.loadMatches(playerId);
+    if (playerId) {
+      this.loadPlayer(playerId);
+      this.loadMatches(playerId);
+    }
   }
 
   loadPlayer(playerId: number) {
@@ -88,8 +91,8 @@ export class PlayerComponent implements OnInit {
   }
 
   onLoadPlayer() {
-    const playerId = Number(this.playerId);
-    if (!playerId || Number.isNaN(playerId)) {
+    const playerId = parseId(this.playerId);
+    if (!playerId) {
       this.errorLoadPlayer.set('wrong UID format');
       return;
     }

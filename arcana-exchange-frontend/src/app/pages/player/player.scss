@@ -1,0 +1,75 @@
+@use '../pageStyles';
+
+.perfect-matches {
+  margin-top: 22px;
+  padding: 22px;
+}
+
+.perfect-matches__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.perfect-match-card {
+  min-width: 0;
+  display: grid;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--ae-radius);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.perfect-match-card__player {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  img {
+    width: 54px;
+    height: 54px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    object-fit: cover;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  div {
+    min-width: 0;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  p {
+    margin: 5px 0 0;
+    color: var(--ae-text-muted);
+    font-size: 13px;
+  }
+}
+
+.perfect-match-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  button,
+  a {
+    flex: 1 1 150px;
+    transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      border-color: rgba(213, 184, 122, 0.78);
+      background: rgba(213, 184, 122, 0.16);
+    }
+  }
+}

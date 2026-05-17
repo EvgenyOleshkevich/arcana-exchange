@@ -1,1 +1,231 @@
-<p>profile works!</p>
+<section class="page player-update-page">
+
+  @if (player(); as player) {
+    <header class="player-hero">
+
+      <div class="player-hero__main">
+        <img
+          class="player-hero__avatar"
+          [src]="'/assets/images/icons/' + player.avatarPath + '.png'"
+          [alt]="player.name"
+        />
+
+        <div>
+          <p class="eyebrow">Player update</p>
+
+          <h1>
+            {{ player.name }}
+          </h1>
+
+          <div class="player-hero__meta">
+            <span>UID: {{ player.playerId }}</span>
+            <span>{{ playerServer() }}</span>
+            <span>{{ player.countCards }} карт</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="player-hero__dates">
+        <p>
+          Профиль обновлён:
+          <strong>{{ player.profileUpdatedAt | date:'short' }}</strong>
+        </p>
+
+        <p>
+          Карты обновлены:
+          <strong>{{ player.cardsUpdatedAt | date:'short' }}</strong>
+        </p>
+      </div>
+
+      <div class="player-hero__actions">
+        <button type="button" (click)="onUpdatePlayerInfo()">
+          Обновить профиль
+        </button>
+
+        @if (verificationCode()) {
+          <button type="button" (click)="onVerifyCode()">
+            Проверить код
+          </button>
+        } @else {
+          <button type="button" (click)="onRequestVerificationCode()">
+            Запросить код
+          </button>
+        }
+      </div>
+
+      @if (verificationCode(); as code) {
+        <div class="verification-code">
+          <span>Код верификации:</span>
+          <strong>{{ code }}</strong>
+        </div>
+      }
+
+      @if (verifyResult()) {
+        <p class="form-success">
+          Код подтверждён.
+        </p>
+      }
+
+      @if (errorLoadPlayer()) {
+        <p class="form-error">
+          {{ errorLoadPlayer() }}
+        </p>
+      }
+
+      @if (errorVerify()) {
+        <p class="form-error">
+          {{ errorVerify() }}
+        </p>
+      }
+
+    </header>
+
+    <main class="cards-update-panel">
+
+      <div class="panel-header">
+        <div>
+          <h2>Обновление карт</h2>
+          <p>
+            Вставьте данные одним из способов: JSON или HTML.
+          </p>
+        </div>
+      </div>
+
+      <div class="cards-update-tabs">
+        <button
+          type="button"
+          class="cards-update-tabs__tab"
+          [class.active]="!JsonModeSelected()"
+          (click)="onSelectUpdateJson()"
+        >
+          JSON
+        </button>
+
+        <button
+          type="button"
+          class="cards-update-tabs__tab"
+          [class.active]="JsonModeSelected()"
+          (click)="onSelectUpdateHtml()"
+        >
+          HTML
+        </button>
+      </div>
+
+      <div class="cards-update-content">
+
+        @if (JsonModeSelected()) {
+          <form class="cards-update-form" (ngSubmit)="onUpdateCardsJson()">
+            <textarea
+              name="cardsJson"
+              placeholder='Вставьт: Json'
+              [(ngModel)]="inputJson"
+            ></textarea>
+
+            <button type="submit">
+              Обновить карты из JSON
+            </button>
+          </form>
+
+          <section class="update-instruction">
+            <h3>Как обновить через JSON</h3>
+            <ol>
+              <li>Войдите в свой аккаунт HoYolab на другой вкладке браузера.</li>
+              <li>Убедитесь, что ваш профиь открыт, иначе вы увидите сообщение: Data is not public for the user.</li>
+              <li>Перейдите по ссылке
+                <a
+                    [href]="jsonLink()"
+                    target="_blank">LINK
+                </a>
+                .
+              </li>
+              <li>Скопируйте JSON со списком карт игрока.</li>
+              <li>Вставьте JSON в поле выше и отправьте форму.</li>
+            </ol>
+          </section>
+        } @else {
+            <form class="cards-update-form" (ngSubmit)="onUpdateCardsHtml()">
+            <textarea
+              name="cardsHtml"
+              placeholder="Вставьте HTML страницы события"
+              [(ngModel)]="inputHTML"
+            ></textarea>
+
+            <button type="submit">
+              Обновить карты из HTML
+            </button>
+          </form>
+
+          <section class="update-instruction">
+            <h3>Как обновить через HTML</h3>
+            <ol>
+              <li>Зайдите на страницу вашего профиля Genshin Impact в HoYolab.
+                <img
+                    class="instruction__picture"
+                    [src]="'/assets/images/icons/profile.png'"
+                    [alt]="player.name"
+                />
+              </li>
+              <li>Найдите и откройте страницу "Коллекция Лунных арканов".
+                <img
+                    class="instruction__picture"
+                    [src]="'/assets/images/instruction/cards.png'"
+                    [alt]="player.name"
+                />
+              </li>
+              <li>Откройте инструменты разработчика (нажав F12).
+                <img
+                    class="instruction__picture"
+                    [src]="'/assets/images/instruction/cards_f12.png'"
+                    [alt]="player.name"
+                />
+              </li>
+              <li>Откройте вкладку Elements, если она не открыта.
+                <img
+                    class="instruction__picture"
+                    [src]="'/assets/images/instruction/cards_f12_elements.png'"
+                    [alt]="player.name"
+                />
+              </li>
+              <li>Нажмите правой кнопкой мыши на "html lang...".
+                <img
+                    class="instruction__picture"
+                    [src]="'/assets/images/instruction/cards_html.png'"
+                    [alt]="player.name"
+                />
+              </li>
+              <li>Нажмите "Copy" -> "Copy Element".
+                <img
+                    class="instruction__picture"
+                    [src]="'/assets/images/instruction/cards_copy.png'"
+                    [alt]="player.name"
+                />
+              </li>
+              <li>Вставьте HTML в поле выше и отправьте форму.</li>
+            </ol>
+          </section>
+        }
+
+        @if (errorUpdateCards()) {
+          <p class="form-error">
+            {{ errorUpdateCards() }}
+          </p>
+        }
+
+      </div>
+
+    </main>
+  } @else {
+    <section class="player-search player-search--empty">
+      <p class="eyebrow">Player update</p>
+
+      <h1>Загрузка игрока</h1>
+
+      @if (errorLoadPlayer()) {
+        <p class="form-error">
+          {{ errorLoadPlayer() }}
+        </p>
+      }
+    </section>
+  }
+
+</section>

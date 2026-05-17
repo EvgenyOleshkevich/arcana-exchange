@@ -1,0 +1,51 @@
+@use '../pageStyles';
+
+.server-select {
+  display: grid;
+  gap: 8px;
+
+  > span {
+    color: var(--ae-text-muted);
+    font-size: 13px;
+    font-weight: 800;
+  }
+}
+
+.server-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.server-button {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ae-text-muted);
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+
+  &:hover,
+  &.active {
+    border-color: var(--ae-border-gold);
+    background: rgba(213, 184, 122, 0.12);
+    color: var(--ae-gold);
+  }
+}
+
+@media (max-width: 620px) {
+  .server-switch {
+    border-radius: var(--ae-radius);
+  }
+
+  .server-button {
+    flex: 1 1 120px;
+  }
+}

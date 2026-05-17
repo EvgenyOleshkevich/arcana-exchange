@@ -15,6 +15,15 @@ export function getServerLabel(type: Server): string {
     }
 }
 
+export function toHoyolabServer(server: Server): string {
+  switch (server) {
+    case Server.America: return 'os_usa';
+    case Server.Europe: return 'os_euro';
+    case Server.Asia: return 'os_asia';
+    case Server.Tw_Hk_Mo: return 'os_cht';
+  }
+}
+
 export const servers = Object.values(Server).map(server => ({
   value: server,
   label: getServerLabel(server),

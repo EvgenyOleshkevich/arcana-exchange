@@ -1,4 +1,4 @@
-<div class="match-modal-backdrop" (click)="onClose()">
+<div class="match-modal-backdrop" (click)="onCloseModal()">
   <section class="match-modal" (click)="$event.stopPropagation()">
 
     <header class="match-modal__header">
@@ -13,7 +13,7 @@
       <button
         type="button"
         class="match-modal__close"
-        (click)="onClose()"
+        (click)="onCloseModal()"
       >
         ✕
       </button>
@@ -75,6 +75,7 @@
 
     </div>
 
+    <!--
     <footer class="match-modal__footer">
       <p>
         Свяжитесь с игроком внутри Genshin Impact по UID.
@@ -88,6 +89,7 @@
         Скопировать UID
       </button>
     </footer>
+    -->
 
   </section>
 </div>
