@@ -1,5 +1,5 @@
 .page {
-  width: min(1180px, 100%);
+  width: min(1480px, 100%);
   margin: 0 auto;
   padding: 34px 20px 72px;
 }
@@ -50,8 +50,9 @@
 
 .cards-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
+  grid-template-columns: minmax(0, 1040px) minmax(340px, 380px);
   align-items: start;
+  justify-content: center;
   gap: 22px;
   margin-top: 22px;
 }
@@ -227,7 +228,7 @@
 }
 
 .player-search {
-  max-width: 760px;
+  width: 100%;
   margin: 0 auto;
   padding: 30px;
 

@@ -4,6 +4,7 @@ import arcana_exchange.match.PlayerCard;
 import arcana_exchange.match.PlayerCardId;
 import arcana_exchange.player.Player;
 import arcana_exchange.utils.enums.Server;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -73,7 +74,8 @@ public interface PlayerCardRepository
     """)
     List<Player> findPlayersOfferingCard(
             long cardId,
-            Server server
+            Server server,
+            Pageable pageable
     );
 
     @Query(value = """
@@ -84,6 +86,7 @@ public interface PlayerCardRepository
      AND pc.card_id = :cardId
     WHERE p.server = :server
       AND COALESCE(pc.quantity, 0) = 0
+    LIMIT 20
     """, nativeQuery = true)
     List<Player> findPlayersWantingCard(
             long cardId,

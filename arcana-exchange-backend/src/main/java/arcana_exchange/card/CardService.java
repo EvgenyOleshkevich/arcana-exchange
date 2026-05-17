@@ -8,6 +8,7 @@ import arcana_exchange.player.PlayerDto;
 import arcana_exchange.player.PlayerRepository;
 import arcana_exchange.utils.enums.Server;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import arcana_exchange.card.CardRepository;
 import arcana_exchange.match.PlayerCardRepository;
@@ -51,7 +52,7 @@ public class CardService {
     }
 
     public List<PlayerDto> getPlayersOfferingCard(long cardId, Server server) {
-        return entityToDto(playerCardRepository.findPlayersOfferingCard(cardId, server));
+        return entityToDto(playerCardRepository.findPlayersOfferingCard(cardId, server, PageRequest.of(0, 20)));
     }
 
     public List<PlayerDto> getPlayersHavingCard(long cardId, Server server) {
