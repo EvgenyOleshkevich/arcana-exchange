@@ -121,11 +121,12 @@
 
 .match-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  grid-template-columns: repeat(auto-fill, 119px);
   gap: 12px;
 }
 
 .match-card {
+  width: 119px;
   min-width: 0;
   padding: 10px;
   border: 1px solid rgba(255, 255, 255, 0.09);
@@ -134,13 +135,14 @@
 }
 
 .match-card__image {
-  width: 100%;
-  aspect-ratio: 3 / 4;
+  width: 99px;
+  height: 256px;
   object-fit: contain;
   display: block;
 }
 
 .match-card__name {
+  width: 99px;
   min-height: 34px;
   margin: 8px 0 0;
   color: rgba(255, 255, 255, 0.82);

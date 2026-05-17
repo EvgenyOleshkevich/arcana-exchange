@@ -85,12 +85,11 @@ public class PlayerService {
 
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();
 
-        if (!DEBUG) {
-            if (info.getSignature() == null ||
-                    player.getVerificationCode() == null ||
-                    !info.getSignature().contains(player.getVerificationCode())) {
-                throw new RuntimeException("Verification Code does not match");
-            }
+
+        if (info.getSignature() == null ||
+                player.getVerificationCode() == null ||
+                !info.getSignature().contains(player.getVerificationCode())) {
+            throw new RuntimeException("Verification Code does not match");
         }
 
         var parsedCards =

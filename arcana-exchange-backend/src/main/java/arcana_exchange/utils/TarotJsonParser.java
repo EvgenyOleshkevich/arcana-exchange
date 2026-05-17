@@ -2,10 +2,8 @@ package arcana_exchange.utils;
 
 import arcana_exchange.card.DTO.HoyolabCardsResponse;
 import arcana_exchange.card.DTO.ParsedCard;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -2,51 +2,49 @@
   <header class="about-hero">
     <p class="eyebrow">Arcana Exchange</p>
 
-    <h1>О проекте</h1>
+    <h1>{{ t()('about') }}</h1>
 
     <p>
-      Arcana Exchange - это инструмент для поиска игроков для обмена карт
-      Лунных Аркан в Genshin Impact.
+      {{ t()('aboutTitle') }}
     </p>
   </header>
 
   <main class="about-content">
     <section class="about-section">
-      <h2>Как это работает</h2>
+      <h2>{{ t()('aboutWorkflow') }}</h2>
 
       <ol class="about-steps">
-        <li>Вы загружаете свои данные из HoYoLAB.</li>
-        <li>Сайт анализирует вашу коллекцию.</li>
+        <li>{{ t()('aboutWorkflow1') }}</li>
+        <li>{{ t()('aboutWorkflow2') }}</li>
         <li>
-          Показывает игроков, которые ищут ваши лишние карты или у которых
-          есть нужные вам карты.
+          {{ t()('aboutWorkflow3') }}
         </li>
-        <li>Обмен происходит внутри игры.</li>
+        <li>{{ t()('aboutWorkflow4') }}</li>
       </ol>
     </section>
 
     <section class="about-section">
-      <h2>Безопасность</h2>
+      <h2>{{ t()('aboutSecurity') }}</h2>
 
-      <p>Сайт не требует:</p>
+      <p>{{ t()('aboutSecurityTitle1') }}</p>
 
       <ul>
-        <li>пароль HoYoLAB;</li>
-        <li>cookie;</li>
-        <li>токены авторизации.</li>
+        <li>{{ t()('aboutSecurity1') }}</li>
+        <li>{{ t()('aboutSecurity2') }}</li>
+        <li>{{ t()('aboutSecurity3') }}</li>
       </ul>
 
-      <p>Для обновления коллекции используются:</p>
+      <p>{{ t()('aboutSecurityTitle2') }}</p>
 
       <ul>
-        <li>экспорт JSON или HTML из ресурсов HoYoLAB;</li>
-        <li>публичные игровые данные;</li>
-        <li>verification через подпись профиля.</li>
+        <li>{{ t()('aboutSecurity4') }}</li>
+        <li>{{ t()('aboutSecurity5') }}</li>
+        <li>{{ t()('aboutSecurity6') }}</li>
       </ul>
     </section>
 
     <section class="about-section">
-      <h2>Ссылки</h2>
+      <h2>{{ t()('aboutLinks') }}</h2>
 
       <div class="about-links">
         <a href="https://www.hoyolab.com/home" target="_blank" rel="noopener noreferrer">
@@ -60,11 +58,10 @@
     </section>
 
     <section class="about-section about-section--muted">
-      <h2>Disclaimer</h2>
+      <h2>{{ t()('aboutDisclaimer') }}</h2>
 
       <p>
-        Arcana Exchange не связан с HoYoverse. Genshin Impact является
-        торговой маркой HoYoverse.
+        {{ t()('aboutDisclaimerText') }}
       </p>
     </section>
   </main>

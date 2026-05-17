@@ -13,11 +13,11 @@
 
         <div class="card-exchange-panel__title-group">
           <p class="card-exchange-panel__subtitle">
-            Lunar Arcana
+            {{ t()('cardExchangeArcana') }}
           </p>
 
           <h2 class="card-exchange-panel__title">
-            {{ card.nameRu }}
+            {{ cardName(card) }}
           </h2>
         </div>
       }
@@ -42,7 +42,7 @@
       [class.active]="offersSelected()"
       (click)="onOfferedBy()"
     >
-      Предлагают
+      {{ t()('cardListOffered') }}
       <span>
         {{ exchange().offeredBy.length }}
       </span>
@@ -54,7 +54,7 @@
       [class.active]="!offersSelected()"
       (click)="onWantedBy()"
     >
-      Ищут
+      {{ t()('cardListWnated') }}
       <span>
         {{ exchange().wantedBy.length }}
       </span>
@@ -92,18 +92,20 @@
                     </p>
                 </div>
 
+                <!--
                 <div class="player-card__meta">
                     <span class="player-card__cards">
-                        {{ player.countCards }} карт
+                        {{ player.countCards }} {{ t()('playerCountCards') }}
                     </span>
                 </div>
+                -->
             </a>
           }
         </div>
 
       } @else {
         <div class="empty-state">
-          Никто не предлагает эту карту
+          {{ t()('cardExchangeNobodyOffered') }}
         </div>
       }
     } @else {
@@ -138,7 +140,7 @@
 
       } @else {
         <div class="empty-state">
-          Никто не ищет эту карту
+          {{ t()('cardExchangeNobodyWnated') }}
         </div>
       }
 

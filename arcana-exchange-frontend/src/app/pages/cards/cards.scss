@@ -1,8 +1,12 @@
 @use '../pageStyles';
 
 .server-select {
-  display: grid;
-  gap: 8px;
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 
   > span {
     color: var(--ae-text-muted);
@@ -11,41 +15,23 @@
   }
 }
 
-.server-switch {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.055);
-}
-
-.server-button {
+.server-select__control {
   min-height: 38px;
-  padding: 0 14px;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--ae-text-muted);
+  padding: 0 34px 0 12px;
+  border: 1px solid var(--ae-border-gold);
+  border-radius: 8px;
+  background: rgba(5, 8, 20, 0.68);
+  color: var(--ae-gold);
   font-weight: 800;
   cursor: pointer;
-  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
-
-  &:hover,
-  &.active {
-    border-color: var(--ae-border-gold);
-    background: rgba(213, 184, 122, 0.12);
-    color: var(--ae-gold);
-  }
 }
 
 @media (max-width: 620px) {
-  .server-switch {
-    border-radius: var(--ae-radius);
+  .server-select {
+    width: 100%;
   }
 
-  .server-button {
-    flex: 1 1 120px;
+  .server-select__control {
+    width: 100%;
   }
 }

@@ -15,6 +15,7 @@ import { PlayerMatchModal } from '../../modal/player-match-modal/player-match-mo
 import { parseId } from '../../utils/functions';
 import { FavoritePlayersService } from '../../services/favorite-players-service';
 import { FavoritePlayersComponent } from '../../utils/favorite-players/favorite-players';
+import { I18nService } from '../../i18n/i18n.service';
 
 @Component({
   selector: 'app-player',
@@ -24,6 +25,8 @@ import { FavoritePlayersComponent } from '../../utils/favorite-players/favorite-
   styleUrl: './player.scss',
 })
 export class PlayerComponent implements OnInit {
+  private readonly i18n = inject(I18nService);
+  readonly t = this.i18n.t;
   private readonly playerService = inject(PlayerService);
   private readonly cardService = inject(CardService);
   private readonly favoritePlayersService = inject(FavoritePlayersService);

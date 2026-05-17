@@ -26,28 +26,28 @@
 
       <div class="arcana-card__body">
         <h3 class="arcana-card__title">
-          {{ card.nameRu }}
+          {{ cardName(card) }}
         </h3>
 
         @if (isPlayerMode) {
           @if (quantity > 1) {
             <p class="arcana-card__status arcana-card__status--trade">
-              Можно обменять
+              {{ t()('cardListCanTrade') }}
             </p>
           } @else if (quantity === 1) {
             <p class="arcana-card__status">
-              Есть
+              {{ t()('cardListHave') }}
             </p>
           } @else {
             <p class="arcana-card__status arcana-card__status--missing">
-              Нет карты
+              {{ t()('cardListMissing') }}
             </p>
           }
         } @else {
           <div class="arcana-card__stats">
-            <span title="Предлагают">↔ {{ card.countOffered }}</span>
-            <span title="Есть у игроков">✦ {{ card.countOwned }}</span>
-            <span title="Хотят">♥ {{ card.countWanted }}</span>
+            <span [title]="t()('cardListOffered')">↔ {{ card.countOffered }}</span>
+            <span [title]="t()('cardListCountOwned')">✦ {{ card.countOwned }}</span>
+            <span [title]="t()('cardListWnated')">♥ {{ card.countWanted }}</span>
           </div>
         }
       </div>

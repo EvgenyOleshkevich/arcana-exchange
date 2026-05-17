@@ -8,15 +8,30 @@
             <a
                 routerLink="/cards"
                 routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">Cards</a>
+                [routerLinkActiveOptions]="{ exact: true }">{{ t()('navCards') }}</a>
             <a
                 routerLink="/player"
                 routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">Player</a>
+                [routerLinkActiveOptions]="{ exact: true }">{{ t()('navPlayer') }}</a>
             <a
                 routerLink="/about"
                 routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">About</a>
+                [routerLinkActiveOptions]="{ exact: true }">{{ t()('navAbout') }}</a>
         </nav>
+
+        <div class="navbar__left navbar__left--actions">
+            <label class="language-select">
+                <span class="language-select__label">{{ t()('navLanguage') }}</span>
+
+                <select
+                    class="language-select__control"
+                    [value]="language()"
+                    (change)="onLanguageChange($event)"
+                >
+                    <option value="ru">RU</option>
+                    <option value="en">EN</option>
+                </select>
+            </label>
+        </div>
     </div>
 </header>

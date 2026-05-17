@@ -3,6 +3,8 @@ import { CardExchangePlayers } from '../../model/CardExchangePlayers';
 import { CardsStore } from '../../store/cards-store';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { I18nService } from '../../i18n/i18n.service';
+import { Card } from '../../model/card';
 
 @Component({
   selector: 'app-card-exchange',
@@ -12,6 +14,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './card-exchange.scss',
 })
 export class CardExchange {
+  private readonly i18n = inject(I18nService);
+  readonly t = this.i18n.t;
   private readonly cardsStore = inject(CardsStore);
   readonly exchange = input.required<CardExchangePlayers>();
   readonly cardId = input.required<number>();
@@ -33,5 +37,9 @@ export class CardExchange {
 
   onClose() {
     this.close.emit();
+  }
+
+  cardName(card: Card) {
+    return this.i18n.cardName(card);
   }
 }

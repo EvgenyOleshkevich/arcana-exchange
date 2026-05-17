@@ -2,27 +2,26 @@
   <header class="page-header">
     <div>
       <p class="eyebrow">Arcana Exchange</p>
-      <h1>Карты Лунных Аркан</h1>
+      <h1>{{ t()('cardsTitle') }}</h1>
       <p class="page-description">
-        Выберите карту, чтобы посмотреть игроков, которые предлагают её или ищут для обмена.
+        {{ t()('cardsDescription') }}
       </p>
     </div>
 
     <label class="server-select">
-      <span>Сервер</span>
-
-      <div class="server-switch">
+      <span>{{ t()('cardsServer') }}</span>
+      <select
+          class="server-select__control"
+          name="server"
+          [ngModel]="selectedServer()"
+          (ngModelChange)="onServerChange($event)"
+      >
         @for (server of servers; track server.value) {
-            <button
-            type="button"
-            class="server-button"
-            [class.active]="selectedServer() === server.value"
-            (click)="onServerChange(server.value)"
-            >
+            <option [value]="server.value">
             {{ server.label }}
-            </button>
+            </option>
         }
-      </div>
+      </select>
     </label>
   </header>
 
@@ -30,7 +29,7 @@
     <section class="cards-panel">
       <div class="cards-panel-header">
         <div>
-          <h2>Все карты</h2>
+          <h2>{{ t()('cardsAllCards') }}</h2>
         </div>
       </div>
 
@@ -52,10 +51,9 @@
             ✦
           </div>
 
-          <h2>Выберите карту</h2>
+          <h2>{{ t()('cardsSelectCard') }}</h2>
           <p>
-            Здесь появится изображение карты, а также вкладки со спросом и предложением
-            для выбранного сервера.
+            {{ t()('cardsSelectCardDesc') }}
           </p>
         </div>
       }

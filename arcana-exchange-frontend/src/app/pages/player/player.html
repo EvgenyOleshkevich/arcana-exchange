@@ -11,7 +11,7 @@
         />
 
         <div>
-          <p class="eyebrow">Player profile</p>
+          <p class="eyebrow">{{ t()('playerProfile') }}</p>
 
           <h1>
             {{ player.name }}
@@ -20,19 +20,19 @@
           <div class="player-hero__meta">
             <span>UID: {{ player.playerId }}</span>
             <span>{{ playerServer() }}</span>
-            <span>{{ player.countCards }} карт</span>
+            <span>{{ player.countCards }} {{ t()('playerCountCards') }}</span>
           </div>
         </div>
       </div>
 
       <div class="player-hero__dates">
         <p>
-          Профиль обновлён:
+          {{ t()('playerProfileUpdatedAt') }}
           <strong>{{ player.profileUpdatedAt | date:'short' }}</strong>
         </p>
 
         <p>
-          Карты обновлены:
+          {{ t()('playerCardsUpdatedAt') }}
           <strong>{{ player.cardsUpdatedAt | date:'short' }}</strong>
         </p>
       </div>
@@ -41,18 +41,18 @@
 
         <button type="button" (click)="onToggleFavorite()">
           @if (isFavorite()) {
-            Убрать из избранного
+            {{ t()('playerDeleteFavorite') }}
           } @else {
-            Добавить в избранное
+            {{ t()('playerAddFavorite') }}
           }
         </button>
 
         <button type="button" (click)="onTogglePlayerSearch()">
-          Другой игрок
+          {{ t()('playerOtherPlayer') }}
         </button>
 
         <a [routerLink]="['/player', player.playerId, 'update']">
-          Обновить профиль
+          {{ t()('playerUpdatePlayer') }}
         </a>
       </div>
 
@@ -60,25 +60,25 @@
 
     @if (showPlayerSearch()) {
       <section class="player-search player-search--compact">
-        <h2>Найти другого игрока</h2>
+        <h2>{{ t()('playerFindAnotherPlayer') }}</h2>
 
         <form (ngSubmit)="onLoadPlayer()">
           <input
             type="text"
             name="playerId"
-            placeholder="Введите UID игрока"
+            [placeholder]="t()('playerEnterPlayerUID')"
             [(ngModel)]="playerId"
           />
 
           <button type="submit">
-            Открыть
+            {{ t()('playerOpen') }}
           </button>
 
           <button
             type="button"
             (click)="onTogglePlayerSearch()"
           >
-            Скрыть
+            {{ t()('playerHide') }}
           </button>
         </form>
 
@@ -98,22 +98,22 @@
     <section class="player-search player-search--empty">
       <p class="eyebrow">Player search</p>
 
-      <h1>Найти игрока</h1>
+      <h1>{{ t()('playerFindPlayer') }}</h1>
 
       <p>
-        Введите UID игрока, чтобы посмотреть его карты и возможные обмены.
+        {{ t()('playerEnterPlayerUIDLong') }}
       </p>
 
       <form (ngSubmit)="onLoadPlayer()">
         <input
           type="text"
           name="playerId"
-          placeholder="Например: 700123456"
+          [placeholder]="t()('playerExampleUID')"
           [(ngModel)]="playerId"
         />
 
         <button type="submit">
-          Найти игрока
+          {{ t()('playerFindPlayer') }}
         </button>
       </form>
 
@@ -135,9 +135,9 @@
       <section class="cards-panel">
         <div class="cards-panel-header">
           <div>
-            <h2>Карты игрока</h2>
+            <h2>{{ t()('playerPlayerCards') }}</h2>
             <p>
-              Серые карты отсутствуют в коллекции.
+              {{ t()('playerPlayerCardsDesc') }}
             </p>
           </div>
         </div>
@@ -161,10 +161,10 @@
               ✦
             </div>
 
-            <h2>Выберите карту</h2>
+            <h2>{{ t()('cardsSelectCard') }}</h2>
 
             <p>
-              Здесь появятся игроки, которые предлагают или ищут выбранную карту.
+              {{ t()('cardsSelectCardDesc') }}
             </p>
           </div>
         }
@@ -175,9 +175,9 @@
     <section class="perfect-matches">
       <div class="panel-header">
         <div>
-          <h2>Идеальные совпадения</h2>
+          <h2>{{ t()('playerPerfectMatches') }}</h2>
           <p>
-            Игроки, у которых есть нужные вам карты, и которым нужны ваши лишние.
+            {{ t()('playerPerfectMatchesDesc') }}
           </p>
         </div>
       </div>
@@ -201,11 +201,11 @@
 
               <div class="perfect-match-card__actions">
                 <button type="button" (click)="onSelectPlayerMatch(match)">
-                    Посмотреть обмены
+                    {{ t()('playerViewExchanges') }}
                 </button>
 
                 <a [routerLink]="['/player', match.player.playerId]">
-                    Открыть профиль
+                    {{ t()('playerOpenProfile') }}
                 </a>
               </div>
 
@@ -214,7 +214,7 @@
         </div>
       } @else {
         <div class="empty-state">
-          Идеальных совпадений пока нет.
+          {{ t()('playerNoPerfectMatches') }}
         </div>
       }
     </section>

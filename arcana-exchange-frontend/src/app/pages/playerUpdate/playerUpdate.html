@@ -11,7 +11,7 @@
         />
 
         <div>
-          <p class="eyebrow">Player update</p>
+          <p class="eyebrow">{{ t()('playerUpdateTitle') }}</p>
 
           <h1>
             {{ player.name }}
@@ -20,53 +20,57 @@
           <div class="player-hero__meta">
             <span>UID: {{ player.playerId }}</span>
             <span>{{ playerServer() }}</span>
-            <span>{{ player.countCards }} карт</span>
+            <span>{{ player.countCards }} {{ t()('playerCountCards') }}</span>
           </div>
         </div>
       </div>
 
       <div class="player-hero__dates">
         <p>
-          Профиль обновлён:
+          {{ t()('playerProfileUpdatedAt') }}
           <strong>{{ player.profileUpdatedAt | date:'short' }}</strong>
         </p>
 
         <p>
-          Карты обновлены:
+          {{ t()('playerCardsUpdatedAt') }}
           <strong>{{ player.cardsUpdatedAt | date:'short' }}</strong>
         </p>
       </div>
 
       <div class="player-hero__actions">
         <a [routerLink]="['/player', player.playerId]">
-          Назад к профилю
+          {{ t()('playerUpdateBack') }}
         </a>
 
         <button type="button" (click)="onUpdatePlayerInfo()">
-          Обновить профиль
+          {{ t()('playerUpdatePlayer') }}
         </button>
 
         @if (verificationCode()) {
           <button type="button" (click)="onVerifyCode()">
-            Проверить код
+            {{ t()('playerUpdateVerifyCode') }}
+            
           </button>
         } @else {
           <button type="button" (click)="onRequestVerificationCode()">
-            Запросить код
+            {{ t()('playerUpdateRequestCode') }}
           </button>
         }
       </div>
 
       @if (verificationCode(); as code) {
         <div class="verification-code">
-          <span>Код верификации:</span>
+          <span>{{ t()('playerUpdateVerificationCode') }}</span>
           <strong>{{ code }}</strong>
+          <p class="verification-code__hint">
+            {{ t()('playerUpdateVerificationCodeInstruction') }}
+          </p>
         </div>
       }
 
       @if (verifyResult()) {
         <p class="form-success">
-          Код подтверждён.
+          {{ t()('playerUpdateConfirmedCode') }}
         </p>
       }
 
@@ -88,9 +92,9 @@
 
       <div class="panel-header">
         <div>
-          <h2>Обновление карт</h2>
+          <h2>{{ t()('playerUpdateCardUpdate') }}</h2>
           <p>
-            Вставьте данные одним из способов: JSON или HTML.
+            {{ t()('playerUpdateJsonOrHtml') }}
           </p>
         </div>
       </div>
@@ -121,90 +125,90 @@
           <form class="cards-update-form" (ngSubmit)="onUpdateCardsJson()">
             <textarea
               name="cardsJson"
-              placeholder='Вставьт: Json'
+              [placeholder]="t()('playerUpdateInsertJson')"
               [(ngModel)]="inputJson"
             ></textarea>
 
             <button type="submit">
-              Обновить карты из JSON
+              {{ t()('playerUpdateWithJson') }}
             </button>
           </form>
 
           <section class="update-instruction">
-            <h3>Как обновить через JSON</h3>
+            <h3>{{ t()('playerUpdateInstructionJsonHow') }}</h3>
             <ol>
-              <li>Войдите в свой аккаунт HoYolab на другой вкладке браузера.</li>
-              <li>Убедитесь, что ваш профиль открыт, иначе вы увидите сообщение: Data is not public for the user.</li>
-              <li>Перейдите по ссылке
+              <li>{{ t()('playerUpdateInstructionJson1') }}</li>
+              <li>{{ t()('playerUpdateInstructionJson2') }}</li>
+              <li>{{ t()('playerUpdateInstructionJson3') }}
                 <a
                     [href]="jsonLink()"
                     target="_blank">LINK
                 </a>
                 .
               </li>
-              <li>Скопируйте JSON со списком карт игрока.</li>
-              <li>Вставьте JSON в поле выше и отправьте форму.</li>
+              <li>{{ t()('playerUpdateInstructionJson4') }}</li>
+              <li>{{ t()('playerUpdateInstructionJson5') }}</li>
             </ol>
           </section>
         } @else {
             <form class="cards-update-form" (ngSubmit)="onUpdateCardsHtml()">
             <textarea
               name="cardsHtml"
-              placeholder="Вставьте HTML страницы события"
+              [placeholder]="t()('playerUpdateInsertHtml')"
               [(ngModel)]="inputHTML"
             ></textarea>
 
             <button type="submit">
-              Обновить карты из HTML
+              {{ t()('playerUpdateWithHtml') }}
             </button>
           </form>
 
           <section class="update-instruction">
-            <h3>Как обновить через HTML</h3>
+            <h3>{{ t()('playerUpdateInstructionHtmlHow') }}</h3>
             <ol>
-              <li>Зайдите на страницу вашего профиля Genshin Impact в HoYolab.
+              <li>{{ t()('playerUpdateInstructionHtml1') }}
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/profile.png'"
                     alt="profile"
                 />
               </li>
-              <li>Найдите и откройте страницу "Коллекция Лунных арканов".
+              <li>{{ t()('playerUpdateInstructionHtml2') }}
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards.png'"
                     alt="cards"
                 />
               </li>
-              <li>Откройте инструменты разработчика (нажав F12).
+              <li>{{ t()('playerUpdateInstructionHtml3') }}
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards_f12.png'"
                     alt="cards_f12"
                 />
               </li>
-              <li>Откройте вкладку Elements, если она не открыта.
+              <li>{{ t()('playerUpdateInstructionHtml4') }}
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards_f12_elements.png'"
                     alt="cards_f12_elements"
                 />
               </li>
-              <li>Нажмите правой кнопкой мыши на "html lang...".
+              <li>{{ t()('playerUpdateInstructionHtml5') }}
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards_html.png'"
                     alt="cards_html"
                 />
               </li>
-              <li>Нажмите "Copy" -> "Copy Element".
+              <li>{{ t()('playerUpdateInstructionHtml6') }}
                 <img
                     class="instruction__picture"
                     [src]="'/assets/images/instruction/cards_copy.png'"
                     alt="cards_copy"
                 />
               </li>
-              <li>Вставьте HTML в поле выше и отправьте форму.</li>
+              <li>{{ t()('playerUpdateInstructionHtml7') }}</li>
             </ol>
           </section>
         }
@@ -220,9 +224,9 @@
     </main>
   } @else {
     <section class="player-search player-search--empty">
-      <p class="eyebrow">Player update</p>
+      <p class="eyebrow">{{ t()('playerUpdateTitle') }}</p>
 
-      <h1>Загрузка игрока</h1>
+      <h1>{{ t()('playerUpdateLoading') }}</h1>
 
       @if (errorLoadPlayer()) {
         <p class="form-error">

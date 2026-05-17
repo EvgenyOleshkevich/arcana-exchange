@@ -1,6 +1,6 @@
 @if (favoritePlayers().length > 0) {
   <section class="favorite-players">
-    <h2>Избранные профили</h2>
+    <h2>{{ t()('favoritePlayers') }}</h2>
 
     <div class="favorite-players__list">
       @for (player of favoritePlayers(); track player.playerId) {

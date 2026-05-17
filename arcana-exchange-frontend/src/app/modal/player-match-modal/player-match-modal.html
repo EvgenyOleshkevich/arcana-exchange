@@ -3,8 +3,8 @@
 
     <header class="match-modal__header">
       <div>
-        <p class="eyebrow">Perfect match</p>
-        <h2>Обмен с {{ match.player.name }}</h2>
+        <p class="eyebrow">{{ t()('playerMatchTitle') }}</p>
+        <h2>{{ t()('playerMatchWith') }} {{ match.player.name }}</h2>
         <p class="match-modal__uid">
           UID: {{ match.player.playerId }}
         </p>
@@ -23,7 +23,7 @@
 
       <section class="match-modal__column">
         <div class="match-modal__column-header">
-          <h3>Вы отдаёте</h3>
+          <h3>{{ t()('playerMatchYouGive') }}</h3>
           <span>{{ cardsYouCanGive().length }}</span>
         </div>
 
@@ -38,7 +38,7 @@
               />
 
               <p class="match-card__name">
-                {{ card.nameRu }}
+                {{ cardName(card) }}
               </p>
             </article>
           }
@@ -51,7 +51,7 @@
 
       <section class="match-modal__column">
         <div class="match-modal__column-header">
-          <h3>Вы получаете</h3>
+          <h3>{{ t()('playerMatchYouReceive') }}</h3>
           <span>{{ cardsYouCanReceive().length }}</span>
         </div>
 
@@ -66,7 +66,7 @@
               />
 
               <p class="match-card__name">
-                {{ card.nameRu }}
+                {{ cardName(card) }}
               </p>
             </article>
           }

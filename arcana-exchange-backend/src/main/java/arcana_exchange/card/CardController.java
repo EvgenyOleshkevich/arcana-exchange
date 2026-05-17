@@ -15,32 +15,32 @@ public class CardController {
     private final CardService cardService;
 
     @GetMapping
-    public List<Card> getCards() {
-        return cardService.getAllCards();
-    }
+        public List<Card> getCards() {
+            return cardService.getAllCards();
+        }
 
-    @GetMapping("/{cardId}/offers")
-    public List<PlayerDto> getPlayersOfferingCard(
-            @PathVariable long cardId,
-            @RequestParam Server server
+        @GetMapping("/{cardId}/offers")
+        public List<PlayerDto> getPlayersOfferingCard(
+        @PathVariable long cardId,
+        @RequestParam Server server
     ) {
-        return cardService.getPlayersOfferingCard(cardId, server);
-    }
+            return cardService.getPlayersOfferingCard(cardId, server);
+        }
 
-    @GetMapping("/{cardId}/wanted")
-    public List<PlayerDto> getPlayersWantingCard(
-            @PathVariable long cardId,
-            @RequestParam Server server
+        @GetMapping("/{cardId}/wanted")
+        public List<PlayerDto> getPlayersWantingCard(
+        @PathVariable long cardId,
+        @RequestParam Server server
     ) {
-        return cardService.getPlayersWantingCard(cardId, server);
-    }
+            return cardService.getPlayersWantingCard(cardId, server);
+        }
 
-    @GetMapping("/{cardId}/exchange-players")
-    public CardExchangePlayersDto getPlayersExchangingCard(
-            @PathVariable long cardId,
-            @RequestParam Server server
+        @GetMapping("/{cardId}/exchange-players")
+        public CardExchangePlayersDto getPlayersExchangingCard(
+        @PathVariable long cardId,
+        @RequestParam Server server
     ) {
-        return new CardExchangePlayersDto(
+            return new CardExchangePlayersDto(
                 cardService.getPlayersOfferingCard(cardId, server),
                 cardService.getPlayersWantingCard(cardId, server));
     }

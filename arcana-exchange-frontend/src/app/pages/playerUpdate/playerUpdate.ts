@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { getServerLabel, toHoyolabServer } from '../../model/Enums';
 import { parseId } from '../../utils/functions';
+import { I18nService } from '../../i18n/i18n.service';
 
 @Component({
   selector: 'app-player-update',
@@ -15,6 +16,8 @@ import { parseId } from '../../utils/functions';
   styleUrl: './playerUpdate.scss',
 })
 export class PlayerUpdateComponent {
+  private readonly i18n = inject(I18nService);
+  readonly t = this.i18n.t;
   private playerService = inject(PlayerService);
   private readonly route = inject(ActivatedRoute);
   private router = inject(Router);
