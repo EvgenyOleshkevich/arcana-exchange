@@ -96,7 +96,7 @@ public interface PlayerCardRepository
     );
 
     @Query(value = """
-    SELECT DISTINCT other_player.*
+    SELECT other_player.*
     FROM players other_player
     WHERE other_player.player_id <> :playerId
       AND other_player.server = (

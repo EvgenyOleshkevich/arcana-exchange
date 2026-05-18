@@ -45,9 +45,30 @@
           }
         } @else {
           <div class="arcana-card__stats">
-            <span [title]="t()('cardListOffered')">↔ {{ card.countOffered }}</span>
-            <span [title]="t()('cardListCountOwned')">✦ {{ card.countOwned }}</span>
-            <span [title]="t()('cardListWnated')">♥ {{ card.countWanted }}</span>
+            <span [title]="t()('cardListOffered')">↔ 
+              @if (card.countOffered < 100) {
+                {{card.countOffered}}
+              }
+              @else {
+                99+
+              }
+            </span>
+            <span [title]="t()('cardListCountOwned')">✦ 
+              @if (card.countOwned < 100) {
+                {{card.countOwned}}
+              }
+              @else {
+                99+
+              }
+            </span>
+            <span [title]="t()('cardListWanted')">♥ 
+              @if (card.countWanted < 100) {
+                {{card.countWanted}}
+              }
+              @else {
+                99+
+              }
+            </span>
           </div>
         }
       </div>

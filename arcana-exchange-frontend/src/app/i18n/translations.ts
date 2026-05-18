@@ -68,11 +68,11 @@ export const translations = {
     cardListMissing: 'Нет карты',
     cardListOffered: 'Предлагают',
     cardListCountOwned: 'Есть у игроков',
-    cardListWnated: 'Ищут',
+    cardListWanted: 'Ищут',
 
     cardExchangeArcana: 'Лунная Аркана',
     cardExchangeNobodyOffered: 'Никто не предлагает эту карту',
-    cardExchangeNobodyWnated: 'Никто не ищет эту карту',
+    cardExchangeNobodyWanted: 'Никто не ищет эту карту',
 
     favoritePlayers: 'Избранные профили',
 
@@ -171,11 +171,11 @@ export const translations = {
     cardListMissing: 'Missing',
     cardListOffered: 'Offered',
     cardListCountOwned: 'Count owned',
-    cardListWnated: 'Wanted',
+    cardListWanted: 'Wanted',
 
     cardExchangeArcana: 'Lunar Arcana',
     cardExchangeNobodyOffered: 'No one is offering this card',
-    cardExchangeNobodyWnated: 'No one is looking for this card',
+    cardExchangeNobodyWanted: 'No one is looking for this card',
 
     favoritePlayers: 'Favorite Profiles',
 
