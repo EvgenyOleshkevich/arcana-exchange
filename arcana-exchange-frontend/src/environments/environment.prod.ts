@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://arcana-exchange-backend.onrender.com/api'
+  apiUrl: 'https://arcana-exchange.onrender.com/api'
 };
