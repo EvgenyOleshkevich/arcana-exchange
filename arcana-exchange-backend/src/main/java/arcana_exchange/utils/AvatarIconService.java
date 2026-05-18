@@ -13,6 +13,7 @@ import java.util.Map;
 @Service
 public class AvatarIconService {
     private final Map<String, String> icons;
+    private final Map<String, String> characterIcons;
     private static final String DEFAULT_PATH = "UI_AvatarIcon_Default_Circle";
 
     public AvatarIconService(ObjectMapper objectMapper) throws IOException {
@@ -27,14 +28,26 @@ public class AvatarIconService {
                     new TypeReference<>() {}
             );
         }
+
+        resource =
+                new ClassPathResource("data/characters.json");
+
+        try (InputStream inputStream = resource.getInputStream()) {
+
+            characterIcons = objectMapper.readValue(
+                    inputStream,
+                    new TypeReference<>() {}
+            );
+        }
     }
 
-    public String getIconPath(long avatarId) {
+    public String getIconPath(Long  avatarId) {
         String id = String.valueOf(avatarId);
-        var iconPath = icons.get(id);
-        if (iconPath == null) {
-            return DEFAULT_PATH;
-        }
-        return iconPath;
+        return icons.getOrDefault(
+                id,
+                characterIcons.getOrDefault(
+                        id,
+                        DEFAULT_PATH
+                ));
     }
 }

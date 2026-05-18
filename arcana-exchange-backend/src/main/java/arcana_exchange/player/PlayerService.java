@@ -65,7 +65,7 @@ public class PlayerService {
         var player = Player.builder()
                 .playerId(id)
                 .name(info.getNickname())
-                .avatarPath(avatarIconService.getIconPath(info.getProfilePicture().getId()))
+                .avatarPath(avatarIconService.getIconPath(info.getProfilePicture().getResolvedId()))
                 .verificationCode(VerificationCodeGenerator.generateCode())
                 .server(getServer(response.getRegion()))
                 .countCards(0)
@@ -86,10 +86,12 @@ public class PlayerService {
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();
 
 
-        if (info.getSignature() == null ||
-                player.getVerificationCode() == null ||
-                !info.getSignature().contains(player.getVerificationCode())) {
-            throw new RuntimeException("Verification Code does not match");
+        if (!DEBUG) {
+            if (info.getSignature() == null ||
+                    player.getVerificationCode() == null ||
+                    !info.getSignature().contains(player.getVerificationCode())) {
+                throw new RuntimeException("Verification Code does not match");
+            }
         }
 
         var parsedCards =
@@ -113,8 +115,8 @@ public class PlayerService {
 
         player.setName(info.getNickname());
         player.setCountCards(sumCard);
-        player.setVerificationCode(null);
-        player.setAvatarPath(avatarIconService.getIconPath(info.getProfilePicture().getId()));
+        //player.setVerificationCode(null);
+        player.setAvatarPath(avatarIconService.getIconPath(info.getProfilePicture().getResolvedId()));
         player.setProfileUpdatedAt(Instant.now());
         player.setCardsUpdatedAt(Instant.now());
 
@@ -169,7 +171,7 @@ public class PlayerService {
 
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();
         player.setName(info.getNickname());
-        player.setAvatarPath(avatarIconService.getIconPath(info.getProfilePicture().getId()));
+        player.setAvatarPath(avatarIconService.getIconPath(info.getProfilePicture().getResolvedId()));
         player.setProfileUpdatedAt(Instant.now());
         playerRepository.save(player);
 

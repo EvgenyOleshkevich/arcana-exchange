@@ -16,6 +16,11 @@ public class PlayerInfoResponse {
 
     @Data
     public static class ProfilePicture {
-        private long  id;
+        private Long id;
+        private Long avatarId;
+
+        public Long getResolvedId() {
+            return id != null ? id : avatarId;
+        }
     }
 }
