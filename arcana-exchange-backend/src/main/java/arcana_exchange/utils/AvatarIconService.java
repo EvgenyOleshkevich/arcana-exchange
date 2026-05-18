@@ -18,8 +18,7 @@ public class AvatarIconService {
 
     public AvatarIconService(ObjectMapper objectMapper) throws IOException {
 
-        Resource resource =
-                new ClassPathResource("data/icons.json");
+        Resource resource = new ClassPathResource("data/icons.json");
 
         try (InputStream inputStream = resource.getInputStream()) {
 
@@ -29,8 +28,7 @@ public class AvatarIconService {
             );
         }
 
-        resource =
-                new ClassPathResource("data/characters.json");
+        resource = new ClassPathResource("data/characters.json");
 
         try (InputStream inputStream = resource.getInputStream()) {
 

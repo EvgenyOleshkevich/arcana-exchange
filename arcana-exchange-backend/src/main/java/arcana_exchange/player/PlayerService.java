@@ -115,7 +115,7 @@ public class PlayerService {
 
         player.setName(info.getNickname());
         player.setCountCards(sumCard);
-        //player.setVerificationCode(null);
+        player.setVerificationCode(null);
         player.setAvatarPath(avatarIconService.getIconPath(info.getProfilePicture().getResolvedId()));
         player.setProfileUpdatedAt(Instant.now());
         player.setCardsUpdatedAt(Instant.now());
