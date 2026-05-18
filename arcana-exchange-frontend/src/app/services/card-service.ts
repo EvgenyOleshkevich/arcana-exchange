@@ -4,6 +4,7 @@ import { Card } from '../model/card';
 import { CardExchangePlayers } from '../model/CardExchangePlayers';
 import { Server } from '../model/Enums';
 import { environment } from '../../environments/environment';
+import { tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CardService {
@@ -11,7 +12,9 @@ export class CardService {
   private readonly apiUrl = environment.apiUrl;
 
   getCards() {
-    return this.http.get<Card[]>(`${this.apiUrl}/cards`);
+    return this.http.get<Card[]>(`${this.apiUrl}/cards`).pipe(
+      tap(cards => console.log('cards loaded', cards))
+    );
   }
 
   getPlayersExchangingCard(cardId: number, server: Server) {
