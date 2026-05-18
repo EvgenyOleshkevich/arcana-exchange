@@ -1,25 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Card } from '../model/card';
 import { Player } from '../model/player';
-import { Observable } from 'rxjs';
 import { PlayerMatch } from '../model/PlayerMatch';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class PlayerService {
   private readonly http = inject(HttpClient);
+  private readonly apiUrl = environment.apiUrl;
 
   getPlayer(playerId: number) {
-    return this.http.get<Player>(`/api/player/${playerId}`);
+    return this.http.get<Player>(`${this.apiUrl}/player/${playerId}`);
   }
 
   createPlayer(playerId: number) {
-    return this.http.post<Player>(`/api/player/${playerId}/create`, null);
+    return this.http.post<Player>(`${this.apiUrl}/player/${playerId}/create`, null);
   }
 
   updateCardsHtml(playerId: number, data: string) {
     return this.http.put<void>(
-      `/api/player/${playerId}/cards/html`,
+      `${this.apiUrl}/player/${playerId}/cards/html`,
       data,
       {
         headers: {
@@ -31,7 +31,7 @@ export class PlayerService {
 
   updateCardsJson(playerId: number, data: string) {
     return this.http.put<void>(
-      `/api/player/${playerId}/cards/json`,
+      `${this.apiUrl}/player/${playerId}/cards/json`,
       data,
       {
         headers: {
@@ -42,12 +42,12 @@ export class PlayerService {
   }
 
   updateInfo(playerId: number) {
-    return this.http.put<Player>(`/api/player/${playerId}/info`, null);
+    return this.http.put<Player>(`${this.apiUrl}/player/${playerId}/info`, null);
   }
 
   getVerificationCode(playerId: number) {
   return this.http.post(
-    `/api/player/${playerId}/verification-code`,
+    `${this.apiUrl}/player/${playerId}/verification-code`,
     null,
     {
       responseType: 'text',
@@ -56,10 +56,10 @@ export class PlayerService {
 }
 
   verifyCode(playerId: number) {
-    return this.http.get<boolean>(`/api/player/${playerId}/verify`);
+    return this.http.get<boolean>(`${this.apiUrl}/player/${playerId}/verify`);
   }
 
   getPerfectMatches(playerId: number) {
-    return this.http.get<PlayerMatch[]>(`/api/player/${playerId}/match`);
+    return this.http.get<PlayerMatch[]>(`${this.apiUrl}/player/${playerId}/match`);
   }
 }
