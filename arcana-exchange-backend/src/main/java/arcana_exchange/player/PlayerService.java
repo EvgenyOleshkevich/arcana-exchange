@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PlayerService {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final Duration UPDATE_COOLDOWN = Duration.ofMinutes(1);
     private static final Duration UPDATE_CARD_COOLDOWN = Duration.ofMinutes(1);
     private final EnkaService enkaService;
