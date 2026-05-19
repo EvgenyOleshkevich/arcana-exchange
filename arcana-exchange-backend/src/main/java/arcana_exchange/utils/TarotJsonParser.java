@@ -2,6 +2,7 @@ package arcana_exchange.utils;
 
 import arcana_exchange.card.DTO.HoyolabCardsResponse;
 import arcana_exchange.card.DTO.ParsedCard;
+import arcana_exchange.exceptions.InvalidHoyolabJsonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class TarotJsonParser {
                     .toList();
 
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Invalid HoYoLAB JSON", e);
+            throw new InvalidHoyolabJsonException("Invalid HoYoLAB JSON", e);
         }
     }
 

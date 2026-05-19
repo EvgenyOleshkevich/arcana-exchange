@@ -164,6 +164,7 @@ export class PlayerUpdateComponent {
       return;
     }
     this.errorVerify.set(null);
+    this.showVerifyResult.set(false);
 
     this.playerService.verifyCode(player.playerId).subscribe({
       next: (res) => {
