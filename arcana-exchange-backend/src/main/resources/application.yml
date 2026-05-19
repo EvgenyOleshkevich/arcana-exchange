@@ -1,3 +1,8 @@
+app:
+  url: ${APP_URL}
+  github: ${APP_GITHUB}
+
+
 spring:
   datasource:
     url: ${DB_URL}
