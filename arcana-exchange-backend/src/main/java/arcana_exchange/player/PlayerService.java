@@ -70,7 +70,7 @@ public class PlayerService {
                 .server(getServer(response.getRegion()))
                 .countCards(0)
                 .profileUpdatedAt(Instant.now())
-                .cardsUpdatedAt(Instant.now())
+                //.cardsUpdatedAt(Instant.now())
                 .build();
 
         return playerRepository.save(player).toDto();
@@ -80,7 +80,6 @@ public class PlayerService {
     public void updatePlayer(long id, String data, DataType dataType) {
         var player = playerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Player not found: " + id));
-        validateUpdateCooldown(player);
         validateUpdateCardCooldown(player);
 
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();

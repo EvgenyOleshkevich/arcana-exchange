@@ -17,7 +17,8 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                         .allowedOrigins(
                                 "https://arcana-exchange.vercel.app",
-                                "https://arcana-exchange.info"
+                                "https://arcana-exchange.info",
+                                "https://www.arcana-exchange.info"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*");
