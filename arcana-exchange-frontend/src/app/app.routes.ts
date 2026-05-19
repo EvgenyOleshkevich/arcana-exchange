@@ -8,7 +8,8 @@ export const routes: Routes = [
     {path: 'player', component: PlayerComponent},
     {path: 'player/:playerId', component: PlayerComponent},
     {path: 'player/:playerId/update', component: PlayerUpdateComponent},
+    {path: '', redirectTo: 'cards', pathMatch: 'full'},
     {path: 'cards', component: CardsComponent},
     {path: 'about', component: About},
-    {path: '**', component: About},
+    {path: '**',  redirectTo: 'cards', pathMatch: 'full'},
 ];
