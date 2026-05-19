@@ -6,6 +6,7 @@ import arcana_exchange.card.DTO.ParsedCard;
 import arcana_exchange.card.DTO.PlayerCardDto;
 import arcana_exchange.enka.EnkaService;
 import arcana_exchange.enka.PlayerInfoResponse;
+import arcana_exchange.exceptions.TooManyRequestsException;
 import arcana_exchange.match.PlayerCard;
 import arcana_exchange.match.PlayerCardId;
 import arcana_exchange.match.PlayerCardRepository;
@@ -262,7 +263,7 @@ public class PlayerService {
                 lastUpdatedAt.plus(UPDATE_COOLDOWN);
 
         if (Instant.now().isBefore(nextAllowedUpdate)) {
-            throw new RuntimeException(
+            throw new TooManyRequestsException(
                     "You can update profile only once per minute"
             );
         }
@@ -282,7 +283,7 @@ public class PlayerService {
                 lastUpdatedAt.plus(UPDATE_CARD_COOLDOWN);
 
         if (Instant.now().isBefore(nextAllowedUpdate)) {
-            throw new RuntimeException(
+            throw new TooManyRequestsException(
                     "You can update card only once per 5 minutes"
             );
         }

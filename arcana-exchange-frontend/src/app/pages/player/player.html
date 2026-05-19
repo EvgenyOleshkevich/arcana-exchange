@@ -21,6 +21,11 @@
             <span>UID: {{ player.playerId }}</span>
             <span>{{ playerServer() }}</span>
             <span>{{ player.countCards }} {{ t()('playerCountCards') }}</span>
+           @if (matches().length > 0) {
+              <span>
+                {{ t()('playerPerfectMatches') }}: {{ matches().length }}. {{ t()('playerPerfectMatchesHint') }}
+              </span>
+            }
           </div>
         </div>
       </div>

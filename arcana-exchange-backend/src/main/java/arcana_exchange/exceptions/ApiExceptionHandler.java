@@ -15,4 +15,12 @@ public class ApiExceptionHandler {
     ) {
         return new ApiError(ex.getMessage());
     }
+
+    @ExceptionHandler(TooManyRequestsException.class)
+    @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
+    public ApiError handleTooManyRequests(
+            TooManyRequestsException ex
+    ) {
+        return new ApiError(ex.getMessage());
+    }
 }
