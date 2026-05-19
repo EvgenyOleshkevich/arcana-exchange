@@ -56,7 +56,7 @@ public class PlayerService {
 
     public PlayerDto createPlayer(long id) {
         if (playerRepository.findById(id).isPresent()) {
-            throw new RuntimeException("Player with this id already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Player with this id already exists");
         }
 
         PlayerInfoResponse response =
@@ -80,7 +80,7 @@ public class PlayerService {
     @Transactional
     public void updatePlayer(long id, String data, DataType dataType) {
         var player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player not found: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + id));
         validateUpdateCardCooldown(player);
 
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();
@@ -90,7 +90,7 @@ public class PlayerService {
             if (info.getSignature() == null ||
                     player.getVerificationCode() == null ||
                     !info.getSignature().contains(player.getVerificationCode())) {
-                throw new RuntimeException("Verification Code does not match");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Verification Code does not match");
             }
         }
 
@@ -104,12 +104,16 @@ public class PlayerService {
                 .map(ParsedCard::externalImageCode)
                 .distinct()
                 .count()) {
-            throw new RuntimeException("Duplicate cards in HTML");
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Duplicate cards in HTML");
         }
 
         int sumCard = parsedCards.stream().reduce(0, (sum, card) -> sum + card.quantity(), Integer::sum);
         if (!CountCardChecker.canHaveCards(sumCard)) {
-            throw new RuntimeException("Suspicious profile:\n" +
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Suspicious profile:\n" +
                     "claimed cards exceed expected monthly maximum");
         }
 
@@ -165,7 +169,7 @@ public class PlayerService {
     @Transactional
     public PlayerDto updatePlayerInfo(long id) {
         var player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player not found: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + id));
 
         validateUpdateCooldown(player);
 
@@ -180,7 +184,7 @@ public class PlayerService {
 
     public String requestCode(long id) {
         var player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player not found: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + id));
 
 
         if (player.getVerificationCode() == null) {
@@ -193,10 +197,12 @@ public class PlayerService {
 
     public boolean verifyCode(long id) {
         var player = playerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Player not found: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + id));
 
         if (player.getVerificationCode() == null) {
-            throw new RuntimeException("Verification code is null, you need request new code");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Verification code is null, you need request new code");
         }
 
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();
@@ -207,7 +213,7 @@ public class PlayerService {
 
     public void deletePlayer(long id) {
         if (!playerRepository.existsById(id)) {
-            throw new RuntimeException("Player not found: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + id);
         }
         playerRepository.deleteById(id);
     }
@@ -243,7 +249,9 @@ public class PlayerService {
                 updatedCards.add(card);
                 return card;
             }
-            throw new RuntimeException("Unknown card: " + parsed.name());
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Unknown card: " + parsed.name());
         }
         return card;
     }

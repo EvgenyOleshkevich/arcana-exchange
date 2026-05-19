@@ -1,9 +1,11 @@
 package arcana_exchange.enka;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class EnkaService {
                     .body(PlayerInfoResponse.class);
 
         } catch (HttpClientErrorException.NotFound e) {
-            throw new RuntimeException("Player not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found");
         }
     }
 }
