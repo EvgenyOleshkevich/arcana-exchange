@@ -34,7 +34,8 @@ export const translations = {
     playerOpenProfile: 'Открыть профиль',
     playerViewExchanges: 'Посмотреть обмены',
     playerNoPerfectMatches: 'Идеальных совпадений пока нет',
-    playerPerfectMatchesHint: 'смотрите ниже', 
+    playerPerfectMatchesHint: 'смотрите ниже',
+    playerWrongID: 'Неверный формат UID', 
     
     playerUpdateTitle: 'Обновление информации об игроке',
     playerUpdateLoading: 'Загрузка игрока',
@@ -145,6 +146,7 @@ export const translations = {
     playerViewExchanges: 'View Exchanges',
     playerNoPerfectMatches: 'There are no perfect matches yet',
     playerPerfectMatchesHint: 'see below', 
+    playerWrongID: 'wrong UID format', 
 
     playerUpdateTitle: 'Player update',
     playerUpdateLoading: 'Loading Player',

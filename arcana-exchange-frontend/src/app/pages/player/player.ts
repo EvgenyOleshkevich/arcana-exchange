@@ -15,7 +15,7 @@ import { PlayerMatchModal } from '../../modal/player-match-modal/player-match-mo
 import { parseId } from '../../utils/functions';
 import { FavoritePlayersService } from '../../services/favorite-players-service';
 import { FavoritePlayersComponent } from '../../utils/favorite-players/favorite-players';
-import { I18nService } from '../../i18n/i18n.service';
+import { I18nService, TranslationKey  } from '../../i18n/i18n.service';
 
 @Component({
   selector: 'app-player',
@@ -41,6 +41,7 @@ export class PlayerComponent implements OnInit {
   readonly selectedPlayerMatch = signal<PlayerMatch | null>(null);
 
   readonly errorLoadPlayer = signal<string | null>(null);
+  readonly errorLoadPlayerFront = signal<TranslationKey  | null>(null);
   readonly errorLoadMatches = signal<string | null>(null);
   readonly errorLoadCardExchange = signal<string | null>(null);
 
@@ -82,6 +83,7 @@ export class PlayerComponent implements OnInit {
         this.cardExchange.set(null);
         this.showPlayerSearch.set(false);
         this.errorLoadPlayer.set(null);
+        this.errorLoadPlayerFront.set(null);
 
         if (playerId) {
           this.loadPlayer(playerId);
@@ -110,6 +112,7 @@ export class PlayerComponent implements OnInit {
 
   cratePlayer(playerId: number) {
     this.errorLoadPlayer.set(null);
+    this.errorLoadPlayerFront.set(null);
 
     this.playerService.createPlayer(playerId).subscribe({
       next: player => {
@@ -138,9 +141,11 @@ export class PlayerComponent implements OnInit {
   onLoadPlayer() {
     const playerId = parseId(this.playerId);
     if (!playerId) {
-      this.errorLoadPlayer.set('wrong UID format');
+      this.errorLoadPlayerFront.set('playerWrongID');
+      this.errorLoadPlayer.set(null);
       return;
     }
+    this.errorLoadPlayerFront.set(null);
 
     this.router.navigate(['/player', playerId]);
   }

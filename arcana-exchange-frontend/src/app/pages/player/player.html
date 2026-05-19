@@ -91,10 +91,15 @@
             (playerSelected)="onOpenFavoritePlayer($event)"
         />
 
-        @if (errorLoadPlayer()) {
-            <p class="form-error">
-            {{ errorLoadPlayer() }}
-            </p>
+        @if (errorLoadPlayerFront(); as errorKey) {
+          <p class="form-error">
+            {{ t()(errorKey) }}
+          </p>
+        }
+        @else if (errorLoadPlayer(); as error) {
+          <p class="form-error">
+            {{ error }}
+          </p>
         }
       </section>
     }
@@ -126,9 +131,14 @@
         (playerSelected)="onOpenFavoritePlayer($event)"
       />
 
-      @if (errorLoadPlayer()) {
+      @if (errorLoadPlayerFront(); as errorKey) {
         <p class="form-error">
-          {{ errorLoadPlayer() }}
+          {{ t()(errorKey) }}
+        </p>
+      }
+      @else if (errorLoadPlayer(); as error) {
+        <p class="form-error">
+          {{ error }}
         </p>
       }
     </section>
