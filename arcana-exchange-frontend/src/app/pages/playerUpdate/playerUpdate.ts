@@ -129,6 +129,7 @@ export class PlayerUpdateComponent {
     this.playerService.updateInfo(player.playerId).subscribe({
       next: (player) => {
         this.showVerifyResult.set(false);
+        this.verifyResult.set(false);
         this.player.set(player);
       },
       error: (err) => {
@@ -146,7 +147,10 @@ export class PlayerUpdateComponent {
     this.errorVerify.set(null);
 
     this.playerService.getVerificationCode(player.playerId).subscribe({
-      next: (code) => this.verificationCode.set(code),
+      next: (code) => {
+        this.verificationCode.set(code);
+        this.verifyResult.set(false);
+      },
       error: (err) => {
         console.error(err);
         this.errorVerify.set(err.error?.message ?? 'unknown error');

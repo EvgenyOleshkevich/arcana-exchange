@@ -136,9 +136,11 @@
               [(ngModel)]="inputJson"
             ></textarea>
 
-            <button type="submit">
-              {{ t()('playerUpdateWithJson') }}
-            </button>
+            @if (verifyResult()) {
+              <button type="submit">
+                {{ t()('playerUpdateWithJson') }}
+              </button>
+            }
 
             @if (errorUpdateCards()) {
               <p class="form-error">
@@ -172,9 +174,11 @@
               [(ngModel)]="inputHTML"
             ></textarea>
 
-            <button type="submit">
-              {{ t()('playerUpdateWithHtml') }}
-            </button>
+            @if (verifyResult()) {
+              <button type="submit">
+                {{ t()('playerUpdateWithHtml') }}
+              </button>
+            }
 
             @if (errorUpdateCards()) {
               <p class="form-error">
