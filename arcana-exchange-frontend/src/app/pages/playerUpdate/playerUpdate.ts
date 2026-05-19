@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { getServerLabel, toHoyolabServer } from '../../model/Enums';
 import { parseId } from '../../utils/functions';
 import { I18nService } from '../../i18n/i18n.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-player-update',
@@ -26,6 +27,8 @@ export class PlayerUpdateComponent {
   readonly verificationCode = signal<string | null>(null);
   readonly showVerifyResult = signal<boolean>(false);
   readonly verifyResult = signal<boolean>(false);
+  readonly isUpdatingPlayer = signal(false);
+  readonly isUpdatingCards = signal(false);
 
   readonly JsonModeSelected = signal<boolean>(true);
   inputJson = '';
@@ -77,8 +80,11 @@ export class PlayerUpdateComponent {
       return;
     }
     this.errorUpdateCards.set(null);
+    this.isUpdatingCards.set(true);
 
-    this.playerService.updateCardsHtml(player.playerId, this.inputHTML).subscribe({
+    this.playerService.updateCardsHtml(player.playerId, this.inputHTML).pipe(
+      finalize(() => this.isUpdatingCards.set(false))
+    ).subscribe({
       next: () => {
         this.router.navigate(['/player', player.playerId]);
       },
@@ -96,8 +102,11 @@ export class PlayerUpdateComponent {
     }
 
     this.errorUpdateCards.set(null);
+    this.isUpdatingCards.set(true);
 
-    this.playerService.updateCardsJson(player.playerId, this.inputJson).subscribe({
+    this.playerService.updateCardsJson(player.playerId, this.inputJson).pipe(
+      finalize(() => this.isUpdatingCards.set(false))
+    ).subscribe({
       next: () => {
         this.router.navigate(['/player', player.playerId]);
       },
@@ -125,8 +134,11 @@ export class PlayerUpdateComponent {
       return;
     }
     this.errorLoadPlayer.set(null);
+    this.isUpdatingPlayer.set(true);
 
-    this.playerService.updateInfo(player.playerId).subscribe({
+    this.playerService.updateInfo(player.playerId).pipe(
+      finalize(() => this.isUpdatingPlayer.set(false))
+    ).subscribe({
       next: (player) => {
         this.showVerifyResult.set(false);
         this.verifyResult.set(false);

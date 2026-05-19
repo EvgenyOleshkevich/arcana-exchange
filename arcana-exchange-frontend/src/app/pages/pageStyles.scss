@@ -304,10 +304,17 @@
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.62;
+    transform: none;
+  }
 }
 
 .form-error,
-.form-success {
+.form-success,
+.form-pending {
   margin: 14px 0 0;
   padding: 12px 14px;
   border-radius: var(--ae-radius);
@@ -324,6 +331,12 @@
   border: 1px solid rgba(159, 227, 189, 0.36);
   background: rgba(159, 227, 189, 0.08);
   color: var(--ae-success);
+}
+
+.form-pending {
+  border: 1px solid rgba(213, 184, 122, 0.32);
+  background: rgba(213, 184, 122, 0.08);
+  color: var(--ae-gold);
 }
 
 @media (max-width: 920px) {

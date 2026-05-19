@@ -42,7 +42,11 @@
           {{ t()('playerUpdateBack') }}
         </a>
 
-        <button type="button" (click)="onUpdatePlayerInfo()">
+        <button
+          type="button"
+          [disabled]="isUpdatingPlayer()"
+          (click)="onUpdatePlayerInfo()"
+        >
           {{ t()('playerUpdatePlayer') }}
         </button>
 
@@ -57,6 +61,12 @@
           </button>
         }
       </div>
+
+      @if (isUpdatingPlayer()) {
+        <p class="form-pending">
+          {{ t()('playerUpdateRequestSent') }}
+        </p>
+      }
 
       @if (verificationCode(); as code) {
         <div class="verification-code">
@@ -137,9 +147,18 @@
             ></textarea>
 
             @if (verifyResult()) {
-              <button type="submit">
+              <button
+                type="submit"
+                [disabled]="isUpdatingCards()"
+              >
                 {{ t()('playerUpdateWithJson') }}
               </button>
+            }
+
+            @if (isUpdatingCards()) {
+              <p class="form-pending">
+                {{ t()('playerUpdateRequestSent') }}
+              </p>
             }
 
             @if (errorUpdateCards()) {
@@ -175,9 +194,18 @@
             ></textarea>
 
             @if (verifyResult()) {
-              <button type="submit">
+              <button
+                type="submit"
+                [disabled]="isUpdatingCards()"
+              >
                 {{ t()('playerUpdateWithHtml') }}
               </button>
+            }
+
+            @if (isUpdatingCards()) {
+              <p class="form-pending">
+                {{ t()('playerUpdateRequestSent') }}
+              </p>
             }
 
             @if (errorUpdateCards()) {
