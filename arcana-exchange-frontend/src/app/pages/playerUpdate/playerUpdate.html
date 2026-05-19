@@ -68,10 +68,17 @@
         </div>
       }
 
-      @if (verifyResult()) {
-        <p class="form-success">
-          {{ t()('playerUpdateConfirmedCode') }}
-        </p>
+      @if (showVerifyResult()) {
+        @if (verifyResult()) {
+          <p class="form-success">
+            {{ t()('playerUpdateConfirmedCode') }}
+          </p>
+        }
+        @else {
+          <p class="form-error">
+            {{ t()('playerUpdateNotConfirmedCode') }}
+          </p>
+        }
       }
 
       @if (errorLoadPlayer()) {
@@ -132,11 +139,18 @@
             <button type="submit">
               {{ t()('playerUpdateWithJson') }}
             </button>
+
+            @if (errorUpdateCards()) {
+              <p class="form-error">
+                {{ errorUpdateCards() }}
+              </p>
+            }
           </form>
 
           <section class="update-instruction">
             <h3>{{ t()('playerUpdateInstructionJsonHow') }}</h3>
             <ol>
+              <li>{{ t()('playerUpdateInstructionCode') }} </li>
               <li>{{ t()('playerUpdateInstructionJson1') }}</li>
               <li>{{ t()('playerUpdateInstructionJson2') }}</li>
               <li>{{ t()('playerUpdateInstructionJson3') }}
@@ -161,11 +175,19 @@
             <button type="submit">
               {{ t()('playerUpdateWithHtml') }}
             </button>
+
+            @if (errorUpdateCards()) {
+              <p class="form-error">
+                {{ errorUpdateCards() }}
+              </p>
+            }
           </form>
 
           <section class="update-instruction">
             <h3>{{ t()('playerUpdateInstructionHtmlHow') }}</h3>
             <ol>
+              
+              <li>{{ t()('playerUpdateInstructionCode') }} </li>
               <li>{{ t()('playerUpdateInstructionHtml1') }}
                 <img
                     class="instruction__picture"
@@ -211,12 +233,6 @@
               <li>{{ t()('playerUpdateInstructionHtml7') }}</li>
             </ol>
           </section>
-        }
-
-        @if (errorUpdateCards()) {
-          <p class="form-error">
-            {{ errorUpdateCards() }}
-          </p>
         }
 
       </div>

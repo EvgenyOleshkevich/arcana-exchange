@@ -24,6 +24,7 @@ export class PlayerUpdateComponent {
 
   readonly player = signal<Player | null>(null);
   readonly verificationCode = signal<string | null>(null);
+  readonly showVerifyResult = signal<boolean>(false);
   readonly verifyResult = signal<boolean>(false);
 
   readonly JsonModeSelected = signal<boolean>(true);
@@ -102,6 +103,7 @@ export class PlayerUpdateComponent {
       },
       error: err => {
         console.error(err);
+        this.showVerifyResult.set(false);
         this.errorUpdateCards.set(err.error?.message ?? 'unknown error');
       },
     });
@@ -126,6 +128,7 @@ export class PlayerUpdateComponent {
 
     this.playerService.updateInfo(player.playerId).subscribe({
       next: (player) => {
+        this.showVerifyResult.set(false);
         this.player.set(player);
       },
       error: (err) => {
@@ -159,7 +162,10 @@ export class PlayerUpdateComponent {
     this.errorVerify.set(null);
 
     this.playerService.verifyCode(player.playerId).subscribe({
-      next: (res) => this.verifyResult.set(res),
+      next: (res) => {
+        this.showVerifyResult.set(true);
+        this.verifyResult.set(res);
+      },
       error: (err) => {
         console.error(err);
         this.errorVerify.set(err.error?.message ?? 'unknown error');

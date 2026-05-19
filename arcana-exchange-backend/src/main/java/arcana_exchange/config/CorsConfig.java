@@ -16,6 +16,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
                         .allowedOrigins(
+                                "http://localhost:4200",
                                 "https://arcana-exchange.vercel.app",
                                 "https://arcana-exchange.info",
                                 "https://www.arcana-exchange.info"

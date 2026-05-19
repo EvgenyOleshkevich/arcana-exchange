@@ -12,9 +12,7 @@ export class CardService {
   private readonly apiUrl = environment.apiUrl;
 
   getCards() {
-    return this.http.get<Card[]>(`${this.apiUrl}/cards`).pipe(
-      tap(cards => console.log('cards loaded', cards))
-    );
+    return this.http.get<Card[]>(`${this.apiUrl}/cards`);
   }
 
   getPlayersExchangingCard(cardId: number, server: Server) {

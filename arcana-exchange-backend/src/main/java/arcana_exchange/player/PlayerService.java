@@ -183,7 +183,6 @@ public class PlayerService {
 
 
         if (player.getVerificationCode() == null) {
-            validateUpdateCooldown(player);
             player.setVerificationCode(VerificationCodeGenerator.generateCode());
             player.setProfileUpdatedAt(Instant.now());
             playerRepository.save(player);
@@ -194,7 +193,6 @@ public class PlayerService {
     public boolean verifyCode(long id) {
         var player = playerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Player not found: " + id));
-        validateUpdateCooldown(player);
 
         if (player.getVerificationCode() == null) {
             throw new RuntimeException("Verification code is null, you need request new code");
