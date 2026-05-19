@@ -1,6 +1,7 @@
 package arcana_exchange.exceptions;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,10 +27,12 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(ResponseStatusException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiError handleTooManyRequests(
+    public ResponseEntity<ApiError> handleResponseStatusException(
             ResponseStatusException ex
     ) {
-        return new ApiError(ex.getMessage());
+
+        return ResponseEntity
+                .status(ex.getStatusCode())
+                .body(new ApiError(ex.getReason()));
     }
 }
