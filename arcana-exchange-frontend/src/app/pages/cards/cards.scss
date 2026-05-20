@@ -28,7 +28,12 @@
 
 @media (max-width: 620px) {
   .server-select {
+    position: static;
     width: 100%;
+    margin-top: 16px;
+    display: grid;
+    align-items: stretch;
+    gap: 8px;
   }
 
   .server-select__control {
