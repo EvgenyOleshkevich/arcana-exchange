@@ -2,6 +2,7 @@ package arcana_exchange.player;
 
 import arcana_exchange.card.Card;
 import arcana_exchange.card.CardRepository;
+import arcana_exchange.card.DTO.CardInput;
 import arcana_exchange.card.DTO.ParsedCard;
 import arcana_exchange.card.DTO.PlayerCardDto;
 import arcana_exchange.enka.EnkaService;
@@ -15,6 +16,7 @@ import arcana_exchange.utils.*;
 import arcana_exchange.utils.enums.DataType;
 import arcana_exchange.utils.enums.Server;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +32,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PlayerService {
-    private static final boolean DEBUG = false;
+    @Value("${app.debug}")
+    private boolean DEBUG;
     private static final Duration UPDATE_COOLDOWN = Duration.ofMinutes(1);
     private static final Duration UPDATE_CARD_COOLDOWN = Duration.ofMinutes(1);
     private final EnkaService enkaService;
@@ -78,13 +81,74 @@ public class PlayerService {
     }
 
     @Transactional
-    public void updatePlayer(long id, String data, DataType dataType) {
+    public void updatePlayer(long id, List<CardInput> input) {
         var player = playerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + id));
         validateUpdateCardCooldown(player);
 
         var info = enkaService.getPlayerInfo(id).getPlayerInfo();
 
+        if (!DEBUG) {
+            if (info.getSignature() == null ||
+                    player.getVerificationCode() == null ||
+                    !info.getSignature().contains(player.getVerificationCode())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Verification Code does not match");
+            }
+        }
+
+        if (input.size() != input.stream()
+                .map(CardInput::getCardId)
+                .distinct()
+                .count()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Duplicate cards in HTML");
+        }
+
+        int sumCard = input.stream().reduce(0, (sum, card) -> sum + card.getQuantity(), Integer::sum);
+        if (!CountCardChecker.canHaveCards(sumCard)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Suspicious profile:\n" +
+                            "claimed cards exceed expected monthly maximum");
+        }
+
+        player.setName(info.getNickname());
+        player.setCountCards(sumCard);
+        player.setVerificationCode(null);
+        player.setAvatarPath(avatarIconService.getIconPath(info.getProfilePicture().getResolvedId()));
+        player.setProfileUpdatedAt(Instant.now());
+        player.setCardsUpdatedAt(Instant.now());
+
+        List<Card> allCards = cardRepository.findAll();
+        Map<Long, Card> cardsById = allCards.stream()
+                .collect(Collectors.toMap(Card::getCardId, Function.identity()));
+
+        List<PlayerCard> playerCards = input.stream()
+                .map(cardInput -> {
+                    Card card = cardsById.get(cardInput.getCardId());
+
+                    return PlayerCard.builder()
+                            .id(new PlayerCardId(player.getPlayerId(), card.getCardId()))
+                            .quantity(cardInput.getQuantity())
+                            .player(player)
+                            .card(card)
+                            .build();
+                })
+                .toList();
+
+
+        playerCardService.replacePlayerCards(player.getPlayerId(), playerCards);
+        playerRepository.save(player);
+    }
+
+    @Transactional
+    public void updatePlayer(long id, String data, DataType dataType) {
+        var player = playerRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + id));
+        validateUpdateCardCooldown(player);
+
+        var info = enkaService.getPlayerInfo(id).getPlayerInfo();
 
         if (!DEBUG) {
             if (info.getSignature() == null ||
@@ -196,6 +260,9 @@ public class PlayerService {
     }
 
     public boolean verifyCode(long id) {
+        if (DEBUG) {
+            return true;
+        }
         var player = playerRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found: " + id));
 

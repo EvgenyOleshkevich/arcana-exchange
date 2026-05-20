@@ -12,19 +12,34 @@
             </a>
         </div>
 
-        <nav class="navbar__center">
+        <button
+            type="button"
+            class="navbar__menu-toggle"
+            [class.active]="isMenuOpen()"
+            (click)="onToggleMenu()"
+            aria-label="Navigation menu"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="navbar__center" [class.open]="isMenuOpen()">
             <a
                 routerLink="/cards"
                 routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">{{ t()('navCards') }}</a>
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="onCloseMenu()">{{ t()('navCards') }}</a>
             <a
                 routerLink="/player"
                 routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">{{ t()('navPlayer') }}</a>
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="onCloseMenu()">{{ t()('navPlayer') }}</a>
             <a
                 routerLink="/about"
                 routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">{{ t()('navAbout') }}</a>
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="onCloseMenu()">{{ t()('navAbout') }}</a>
         </nav>
 
         <div class="navbar__left navbar__left--actions">

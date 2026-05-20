@@ -41,6 +41,17 @@ export class PlayerService {
     );
   }
 
+  updateCardsManual(playerId: number, cardQuantity: Map<number, number>) {
+    const data = Array.from(cardQuantity, ([key, value]) => ({ 
+      cardId: key, 
+      quantity: value
+    }));
+    return this.http.put<void>(
+      `${this.apiUrl}/player/${playerId}/cards/manual`,
+      data
+    );
+  }
+
   updateInfo(playerId: number) {
     return this.http.put<Player>(`${this.apiUrl}/player/${playerId}/info`, null);
   }

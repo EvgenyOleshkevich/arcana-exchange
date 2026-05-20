@@ -1,6 +1,7 @@
 app:
   url: ${APP_URL}
   github: ${APP_GITHUB}
+  debug: ${APP_DEBUG:false}
 
 
 spring:

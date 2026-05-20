@@ -27,3 +27,15 @@ export function parseId(playerId: string | null) : number | null {
     }
     return parsedId;
 }
+
+export function checkCountCards(cards: Map<number, number>) : boolean {
+    const count = Array.from(cards.values()).reduce((acc, num) => acc + num, 0);
+    const today = new Date();
+    const start = new Date(2025, 9, 1)
+    const months =
+        (today.getFullYear() - start.getFullYear()) * 12 +
+        today.getMonth() -
+        start.getMonth() +
+        1;
+    return count > months;
+}

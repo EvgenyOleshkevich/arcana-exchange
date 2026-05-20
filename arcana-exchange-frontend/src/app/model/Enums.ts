@@ -28,3 +28,9 @@ export const servers = Object.values(Server).map(server => ({
   value: server,
   label: getServerLabel(server),
 }));
+
+export enum InputType {
+  Json,
+  Html,
+  Manual,
+}

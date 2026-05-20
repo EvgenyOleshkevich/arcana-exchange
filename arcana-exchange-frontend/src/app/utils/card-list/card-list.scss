@@ -135,11 +135,13 @@
 
 @media (max-width: 520px) {
   .card-list {
-    width: min(155px, calc((100vw - 52px) / 2));
+    width: 100%;
     gap: 12px;
   }
 
   .arcana-card {
+    width: min(145px, calc((100% - 12px) / 2));
+    height: 398px;
     padding: 8px;
   }
 

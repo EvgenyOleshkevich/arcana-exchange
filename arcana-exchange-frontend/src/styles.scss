@@ -60,3 +60,145 @@ a {
   text-align: center;
   background: rgba(255, 255, 255, 0.035);
 }
+
+.player-update-page {
+  .card-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .arcana-card {
+    width: min(155px, 100%);
+    height: 430px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--ae-radius);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
+      rgba(8, 12, 24, 0.72);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    transition:
+      transform 160ms ease,
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: var(--ae-border-gold);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ae-gold);
+      outline-offset: 3px;
+    }
+  }
+
+  .arcana-card__image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 99 / 256;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 6px;
+    background: radial-gradient(circle at top, rgba(213, 184, 122, 0.12), rgba(0, 0, 0, 0.28));
+  }
+
+  .arcana-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .arcana-card:hover .arcana-card__image {
+    transform: scale(1.025);
+  }
+
+  .arcana-card__body {
+    min-height: 76px;
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding-top: 10px;
+  }
+
+  .arcana-card__title {
+    margin: 0;
+    color: var(--ae-text);
+    font-size: 14px;
+    line-height: 1.25;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .card-quantity {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(213, 184, 122, 0.28);
+    border-radius: var(--ae-radius);
+    background: rgba(5, 8, 20, 0.58);
+  }
+
+  .cards-update-form button.card-quantity__button {
+    width: 36px;
+    height: 36px;
+    justify-self: auto;
+    padding: 0;
+    border: 1px solid rgba(213, 184, 122, 0.34);
+    border-radius: 6px;
+    background: rgba(213, 184, 122, 0.1);
+    color: var(--ae-gold);
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover:not(:disabled) {
+      transform: none;
+      border-color: rgba(213, 184, 122, 0.78);
+      background: rgba(213, 184, 122, 0.18);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.42;
+    }
+  }
+
+  .card-quantity__value {
+    min-width: 0;
+    color: var(--ae-text);
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 620px) {
+  .player-update-page {
+    .card-list {
+      width: 100%;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .arcana-card {
+      width: min(145px, calc((100% - 12px) / 2));
+      height: 398px;
+      padding: 8px;
+    }
+
+    .arcana-card__title {
+      font-size: 13px;
+    }
+  }
+}

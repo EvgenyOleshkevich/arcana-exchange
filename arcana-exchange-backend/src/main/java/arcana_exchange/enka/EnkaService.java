@@ -30,8 +30,18 @@ public class EnkaService {
                     .retrieve()
                     .body(PlayerInfoResponse.class);
 
-        } catch (HttpClientErrorException.NotFound e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found");
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                throw new RuntimeException("Player not found");
+            }
+
+            if (e.getStatusCode().value() == 424) {
+                throw new RuntimeException(
+                        "Enka servers are temporarily unavailable"
+                );
+            }
+
+            throw e;
         }
     }
 }

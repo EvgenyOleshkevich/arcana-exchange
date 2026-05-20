@@ -288,7 +288,7 @@
 }
 
 .player-search button,
-.cards-update-form button,
+.cards-update-form > button,
 .perfect-match-card__actions button,
 .perfect-match-card__actions a {
   min-height: 46px;
@@ -378,6 +378,14 @@
 
   .player-hero__main {
     align-items: flex-start;
+  }
+
+  .player-hero__dates {
+    width: 100%;
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   .player-hero__avatar {

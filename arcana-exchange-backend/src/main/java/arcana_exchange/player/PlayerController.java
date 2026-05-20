@@ -1,6 +1,7 @@
 package arcana_exchange.player;
 
 import arcana_exchange.card.CardService;
+import arcana_exchange.card.DTO.CardInput;
 import arcana_exchange.match.MatchDto;
 import arcana_exchange.utils.enums.DataType;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,14 @@ public class PlayerController {
             @RequestBody String json
     ) {
         playerService.updatePlayer(playerId, json, DataType.JSON);
+    }
+
+    @PutMapping("/{playerId}/cards/manual")
+    public void updatePlayerCardManual(
+            @PathVariable long playerId,
+            @RequestBody List<CardInput> input
+    ) {
+        playerService.updatePlayer(playerId, input);
     }
 
     @PutMapping("/{playerId}/info")

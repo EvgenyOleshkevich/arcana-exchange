@@ -2,6 +2,7 @@ package arcana_exchange.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -34,5 +35,13 @@ public class ApiExceptionHandler {
         return ResponseEntity
                 .status(ex.getStatusCode())
                 .body(new ApiError(ex.getReason()));
+    }
+
+    @ExceptionHandler(EnkaUnavailableException.class)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public ApiError handleEnkaUnavailable(
+            EnkaUnavailableException e
+    ) {
+        return new ApiError(e.getMessage());
     }
 }
