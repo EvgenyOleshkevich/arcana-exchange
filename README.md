@@ -4,6 +4,9 @@ A fan-made web application for exchanging Lunar Arcana cards in Genshin Impact.
 
 The website does not perform the exchange itself — it helps players find matching trade partners.
 
+# The website is available at the link:
+https://www.arcana-exchange.info/cards
+
 ## Features
 
 - Import Lunar Arcana collection from HoYoLAB HTML
