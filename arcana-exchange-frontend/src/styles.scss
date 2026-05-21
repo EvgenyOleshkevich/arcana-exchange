@@ -150,6 +150,8 @@ a {
   .cards-update-form button.card-quantity__button {
     width: 36px;
     height: 36px;
+    min-width: 36px;
+    min-height: 36px;
     justify-self: auto;
     padding: 0;
     border: 1px solid rgba(213, 184, 122, 0.34);
@@ -199,6 +201,20 @@ a {
 
     .arcana-card__title {
       font-size: 13px;
+    }
+
+    .card-quantity {
+      grid-template-columns: 30px minmax(0, 1fr) 30px;
+      gap: 4px;
+    }
+
+    .cards-update-form button.card-quantity__button {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      min-height: 30px;
+      padding: 0;
+      font-size: 16px;
     }
   }
 }

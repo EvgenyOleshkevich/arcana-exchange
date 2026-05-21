@@ -148,34 +148,39 @@
       <div class="cards-update-content">
 
         @if (selectedUpdateMode() === InputType.Json) {
-          <form class="cards-update-form" (ngSubmit)="onUpdateCardsJson()">
-            <textarea
-              name="cardsJson"
-              [placeholder]="t()('playerUpdateInsertJson')"
-              [(ngModel)]="inputJson"
-            ></textarea>
 
-            @if (verifyResult()) {
+          @if (!verifyResult()) {
+            <p class="form-pending">
+              {{ t()('playerUpdateInstructionCode') }} {{ t()('playerUpdateInstructionCodeExtra') }}
+            </p>
+          } @else {
+            <form class="cards-update-form" (ngSubmit)="onUpdateCardsJson()">
+              <textarea
+                name="cardsJson"
+                [placeholder]="t()('playerUpdateInsertJson')"
+                [(ngModel)]="inputJson"
+              ></textarea>
+
               <button
                 type="submit"
                 [disabled]="isUpdatingCards()"
               >
                 {{ t()('playerUpdateWithJson') }}
               </button>
-            }
 
-            @if (isUpdatingCards()) {
-              <p class="form-pending">
-                {{ t()('playerUpdateRequestSent') }}
-              </p>
-            }
+              @if (isUpdatingCards()) {
+                <p class="form-pending">
+                  {{ t()('playerUpdateRequestSent') }}
+                </p>
+              }
 
-            @if (errorUpdateCards()) {
-              <p class="form-error">
-                {{ errorUpdateCards() }}
-              </p>
-            }
-          </form>
+              @if (errorUpdateCards()) {
+                <p class="form-error">
+                  {{ errorUpdateCards() }}
+                </p>
+              }
+            </form>
+          }
 
           <section class="update-instruction">
             <h3>{{ t()('playerUpdateInstructionJsonHow') }}</h3>
@@ -195,34 +200,39 @@
             </ol>
           </section>
         } @else if (selectedUpdateMode() === InputType.Html) {
-          <form class="cards-update-form" (ngSubmit)="onUpdateCardsHtml()">
-            <textarea
-              name="cardsHtml"
-              [placeholder]="t()('playerUpdateInsertHtml')"
-              [(ngModel)]="inputHTML"
-            ></textarea>
+           @if (!verifyResult()) {
+            <p class="form-pending">
+              {{ t()('playerUpdateInstructionCode') }} {{ t()('playerUpdateInstructionCodeExtra') }}
+            </p>
+          } @else {
+            <form class="cards-update-form" (ngSubmit)="onUpdateCardsHtml()">
+              <textarea
+                name="cardsHtml"
+                [placeholder]="t()('playerUpdateInsertHtml')"
+                [(ngModel)]="inputHTML"
+              ></textarea>
 
-            @if (verifyResult()) {
               <button
                 type="submit"
                 [disabled]="isUpdatingCards()"
               >
                 {{ t()('playerUpdateWithHtml') }}
               </button>
-            }
 
-            @if (isUpdatingCards()) {
-              <p class="form-pending">
-                {{ t()('playerUpdateRequestSent') }}
-              </p>
-            }
+              @if (isUpdatingCards()) {
+                <p class="form-pending">
+                  {{ t()('playerUpdateRequestSent') }}
+                </p>
+              }
 
-            @if (errorUpdateCards()) {
-              <p class="form-error">
-                {{ errorUpdateCards() }}
-              </p>
-            }
-          </form>
+              @if (errorUpdateCards()) {
+                <p class="form-error">
+                  {{ errorUpdateCards() }}
+                </p>
+              }
+            </form>
+          }
+          
 
           <section class="update-instruction">
             <h3>{{ t()('playerUpdateInstructionHtmlHow') }}</h3>
@@ -283,82 +293,86 @@
             </ol>
           </section>
 
-          <form class="cards-update-form" (ngSubmit)="onUpdateCardsManual()">
-            @if (verifyResult()) {
+           @if (!verifyResult()) {
+            <p class="form-pending">
+              {{ t()('playerUpdateInstructionCode') }} {{ t()('playerUpdateInstructionCodeExtra') }}
+            </p>
+          } @else {
+            <form class="cards-update-form" (ngSubmit)="onUpdateCardsManual()">
               <button
                 type="submit"
                 [disabled]="isUpdatingCards()"
               >
                 {{ t()('playerUpdateWithManual') }}
               </button>
-            }
 
-            @if (isUpdatingCards()) {
-              <p class="form-pending">
-                {{ t()('playerUpdateRequestSent') }}
-              </p>
-            }
+              @if (isUpdatingCards()) {
+                <p class="form-pending">
+                  {{ t()('playerUpdateRequestSent') }}
+                </p>
+              }
 
-            @if (errorToMuchCards()) {
-              <p class="form-error">
-                {{ t()('playerUpdateToMuchCards') }}
-              </p>
-            }
-            @if (errorUpdateCards()) {
-              <p class="form-error">
-                {{ errorUpdateCards() }}
-              </p>
-            }
+              @if (errorToMuchCards()) {
+                <p class="form-error">
+                  {{ t()('playerUpdateToMuchCards') }}
+                </p>
+              }
+              @if (errorUpdateCards()) {
+                <p class="form-error">
+                  {{ errorUpdateCards() }}
+                </p>
+              }
 
-            <div class="card-list">
-              @for (card of cards(); track card.cardId) {
+              <div class="card-list">
+                @for (card of cards(); track card.cardId) {
 
-                <div
-                  class="arcana-card"
-                >
-                  <div class="arcana-card__image-wrap">
-                    <img
-                      class="arcana-card__image"
-                      [src]="card.imageUrl"
-                      [alt]="card.nameRu"
-                    />
+                  <div
+                    class="arcana-card"
+                  >
+                    <div class="arcana-card__image-wrap">
+                      <img
+                        class="arcana-card__image"
+                        [src]="card.imageUrl"
+                        [alt]="card.nameRu"
+                      />
 
 
-                  </div>
+                    </div>
 
-                  <div class="arcana-card__body">
-                    <h3 class="arcana-card__title">
-                      {{ cardName(card) }}
-                    </h3>
+                    <div class="arcana-card__body">
+                      <h3 class="arcana-card__title">
+                        {{ cardName(card) }}
+                      </h3>
 
-                    <div class="card-quantity" aria-label="Card quantity">
-                      <button
-                        type="button"
-                        class="card-quantity__button"
-                        [disabled]="getCardQuantity(card.cardId) === 0"
-                        (click)="onDecreaseCardQuantity(card.cardId)"
-                      >
-                        -
-                      </button>
+                      <div class="card-quantity" aria-label="Card quantity">
+                        <button
+                          type="button"
+                          class="card-quantity__button"
+                          [disabled]="getCardQuantity(card.cardId) === 0"
+                          (click)="onDecreaseCardQuantity(card.cardId)"
+                        >
+                          -
+                        </button>
 
-                      <span class="card-quantity__value">
-                        {{ getCardQuantity(card.cardId) }}
-                      </span>
+                        <span class="card-quantity__value">
+                          {{ getCardQuantity(card.cardId) }}
+                        </span>
 
-                      <button
-                        type="button"
-                        class="card-quantity__button"
-                        [disabled]="getCardQuantity(card.cardId) === 10"
-                        (click)="onIncreaseCardQuantity(card.cardId)"
-                      >
-                        +
-                      </button>
+                        <button
+                          type="button"
+                          class="card-quantity__button"
+                          [disabled]="getCardQuantity(card.cardId) === 10"
+                          (click)="onIncreaseCardQuantity(card.cardId)"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              }
-            </div>
-          </form>
+                }
+              </div>
+            </form>
+          }
         }
 
       </div>
