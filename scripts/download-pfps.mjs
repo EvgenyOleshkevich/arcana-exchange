@@ -4,8 +4,8 @@ import path from 'node:path';
 const PFPS_URL =
   'https://raw.githubusercontent.com/EnkaNetwork/API-docs/master/store/gi/pfps.json';
 
-const OUT_DIR = './arcana-exchange-frontend/src/assets/images/icons';
-const MAP_FILE = './arcana-exchange-frontend/src/assets/data/icons.json';
+const OUT_DIR = './arcana-exchange-frontend/public/assets/images/icons';
+const MAP_FILE = './arcana-exchange-backend/src/main/resources/data/icons.json';
 
 await fs.mkdir(OUT_DIR, { recursive: true });
 await fs.mkdir(path.dirname(MAP_FILE), { recursive: true });
@@ -13,6 +13,7 @@ await fs.mkdir(path.dirname(MAP_FILE), { recursive: true });
 const pfps = await fetch(PFPS_URL).then(r => r.json());
 
 const result = {};
+let countNew = 0;
 
 for (const [id, data] of Object.entries(pfps)) {
   if (!data.IconPath) continue;
@@ -28,6 +29,7 @@ for (const [id, data] of Object.entries(pfps)) {
 
     result[id] = filePath;
     continue;
+    ++countNew;
   } catch {
   }
   const response = await fetch(imageUrl);
@@ -45,3 +47,4 @@ for (const [id, data] of Object.entries(pfps)) {
 await fs.writeFile(MAP_FILE, JSON.stringify(result, null, 2));
 
 console.log(`Downloaded ${Object.keys(result).length} icons`);
+console.log(`New icons: ${countNew}`);
