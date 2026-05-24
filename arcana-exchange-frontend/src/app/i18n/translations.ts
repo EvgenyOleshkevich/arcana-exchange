@@ -73,6 +73,7 @@ export const translations = {
     playerUpdateInstructionManualHow: 'Как обновить карты вручную',
     playerUpdateInstructionManual1: 'Укажите количество имеющихся у вас карт.',
     playerUpdateToMuchCards: 'Количество указанных карт превышает ожидаемый месячный максимум',
+    playerUpdateVideoGuide: 'Видео гайд:',
 
     cardListCanTrade: 'Можно обменять',
     cardListHave: 'Есть',
@@ -113,6 +114,9 @@ export const translations = {
     aboutLinks: 'Ссылки',
     aboutDisclaimer: 'Отказ от ответственности',
     aboutDisclaimerText: 'Arcana Exchange не связан с HoYoverse. Genshin Impact является торговой маркой HoYoverse.',
+    aboutContact: 'Контактная информация',
+    aboutEmail: 'Электронная почта для отзывов и предложений:',
+    aboutMyHoyolab: 'Мой аккаунт HoYoLAB: ',
 
   },
   en: {
@@ -189,6 +193,8 @@ export const translations = {
     playerUpdateInstructionManualHow: 'How to Update manual',
     playerUpdateInstructionManual1: 'Indicate the number of cards you have.',
     playerUpdateToMuchCards: 'Claimed cards exceed expected monthly maximum',
+    playerUpdateVideoGuide: 'Video guide:',
+
 
     cardListCanTrade: 'Tradable',
     cardListHave: 'Owned',
@@ -229,6 +235,9 @@ export const translations = {
     aboutLinks: 'Links',
     aboutDisclaimer: 'Disclaimer',
     aboutDisclaimerText: 'Arcana trading is not affiliated with HoYoverse. Genshin Impact is a trademark of HoYoverse.',
+    aboutContact: 'Contact',
+    aboutEmail: 'Email for feedback and suggestions:',
+    aboutMyHoyolab: 'My HoYoLAB account:',
   },
 } as const;
 
